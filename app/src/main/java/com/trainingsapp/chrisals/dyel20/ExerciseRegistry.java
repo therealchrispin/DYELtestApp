@@ -6,10 +6,17 @@ import java.util.ArrayList;
  * Created by chris.als on 07.02.17.
  */
 public class ExerciseRegistry extends AbstractExerciseCollection {
-    private ArrayList<Exercise> exercises;
+    private ArrayList<Exercise> exercises =  new ArrayList<Exercise>();;
+    private static ExerciseRegistry exerciseRegistry;
 
-    public ExerciseRegistry() {
-        this.exercises = new ArrayList<Exercise>();
+    public static ExerciseRegistry getInstance(){
+        if(exerciseRegistry == null){
+            exerciseRegistry = new ExerciseRegistry();
+        }
+        return exerciseRegistry;
+    }
+
+    private ExerciseRegistry() {
     }
 
     public void createExercise(String name, int sets, int reps, double weight){
