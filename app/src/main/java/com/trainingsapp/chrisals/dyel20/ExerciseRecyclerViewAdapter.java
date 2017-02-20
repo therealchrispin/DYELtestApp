@@ -41,6 +41,4 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseVi
     public int getItemCount() {
         return exerciseList.size();
     }
-
-
 }
