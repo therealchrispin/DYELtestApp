@@ -6,10 +6,19 @@ import java.util.ArrayList;
  * Created by chris.als on 07.02.17.
  */
 public class Workout extends AbstractExerciseCollection implements Observer {
-
+    private int id;
     private ArrayList<Exercise> exercises;
     private String name;
     private WeekDay weekDay;
+    private boolean active;
+
+    public Workout(String name,WeekDay weekday) {
+        this.name = name;
+        this.weekDay = weekday;
+        this.exercises = new ArrayList<Exercise>();
+        this.active = true;
+
+    }
 
     public boolean isActive() {
         return active;
@@ -18,8 +27,6 @@ public class Workout extends AbstractExerciseCollection implements Observer {
     public void setActive(boolean active) {
         this.active = active;
     }
-
-    private boolean active;
 
 
     public String getName() {
@@ -39,13 +46,6 @@ public class Workout extends AbstractExerciseCollection implements Observer {
         this.weekDay = weekDay;
     }
 
-    public Workout(String name,WeekDay weekday) {
-        this.name = name;
-        this.weekDay = weekday;
-        this.exercises = new ArrayList<Exercise>();
-        this.active = true;
-
-    }
 
     public void addExercise(Exercise ex){
         this.exercises.add(ex);

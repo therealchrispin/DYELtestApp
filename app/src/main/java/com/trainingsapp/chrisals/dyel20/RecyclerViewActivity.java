@@ -22,7 +22,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         setContentView(R.layout.recycler_view_activityy);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        exerciseRegistry = ExerciseRegistry.getInstance();
+        exerciseRegistry = ExerciseRegistry.getInstance(this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -34,7 +34,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
     }
 
-    public void createExercise(View view){
+    public void callExerciseCreator(View view){
         startActivity(new Intent(this, ExerciseCreatorActivity.class));
     }
 }

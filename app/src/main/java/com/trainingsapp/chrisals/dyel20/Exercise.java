@@ -4,6 +4,7 @@ package com.trainingsapp.chrisals.dyel20;
  * Created by chris.als on 07.02.17.
  */
 public class Exercise {
+    private int id;
     private String name;
     private int sets;
     private int reps;
@@ -46,5 +47,13 @@ public class Exercise {
 
     public void setSets(int sets) {
         this.sets = sets;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
