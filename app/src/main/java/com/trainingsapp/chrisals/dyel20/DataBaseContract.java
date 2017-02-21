@@ -51,7 +51,7 @@ public final class DataBaseContract {
         public static final String EXERCISE_ID = "exericse_id";
         public static final String WORKOUT_ID = "workout_id";
 
-        public static final String CREATE_EXERCISE_WORKOUT_ENTRY = "CREATE TABLE" +
+        public static final String CREATE_EXERCISE_WORKOUT_ENTRY = "CREATE TABLE " +
                 TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY," +
                 EXERCISE_ID + " INTEGER," +

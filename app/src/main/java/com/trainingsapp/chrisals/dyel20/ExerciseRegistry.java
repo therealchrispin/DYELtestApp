@@ -12,10 +12,13 @@ public class ExerciseRegistry extends AbstractExerciseCollection {
     private ArrayList<Exercise> exercises =  new ArrayList<Exercise>();
     private static ExerciseRegistry exerciseRegistry;
     private Context context;
+    private ExerciseDBHandler exerciseDBHandler;
+
 
     public static ExerciseRegistry getInstance(Context context){
         if(exerciseRegistry == null){
             exerciseRegistry = new ExerciseRegistry(context);
+            exerciseRegistry.getExercisesFromDB();
         }
         return exerciseRegistry;
     }
@@ -37,7 +40,17 @@ public class ExerciseRegistry extends AbstractExerciseCollection {
         return this.exercises.get(exerciseIndex);
     }
 
-    public ArrayList getAll(){
+    public ArrayList<Exercise> getAll(){
         return this.exercises;
+    }
+
+    public void saveExercises(){
+        exerciseDBHandler = new ExerciseDBHandler(this.context);
+        exerciseDBHandler.insertExerciseToDB(this.exercises);
+    }
+
+    public void getExercisesFromDB(){
+        exerciseDBHandler = new ExerciseDBHandler(this.context);
+        this.exercises = exerciseDBHandler.getAllItem();
     }
 }

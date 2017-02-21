@@ -19,7 +19,7 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_creator);
 
-        this.exerciseRegistry = ExerciseRegistry.getInstance();
+        this.exerciseRegistry = ExerciseRegistry.getInstance(this);
     }
 
 
@@ -48,4 +48,5 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
         this.exerciseReps = reps.getText().toString();
         this.exerciseWeight = weight.getText().toString();
     }
+
 }

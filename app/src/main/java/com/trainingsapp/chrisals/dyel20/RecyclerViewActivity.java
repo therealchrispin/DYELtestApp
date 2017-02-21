@@ -35,6 +35,8 @@ public class RecyclerViewActivity extends AppCompatActivity {
     }
 
     public void callExerciseCreator(View view){
+        exerciseRegistry.saveExercises();
         startActivity(new Intent(this, ExerciseCreatorActivity.class));
     }
+
 }
