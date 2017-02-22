@@ -34,7 +34,7 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
 
         exerciseRegistry.addExercise(exercise);
 
-        Intent intent = new Intent(this, ExerciseRegistryActivity.class);
+        Intent intent = new Intent(this, ExerciseRegistryViewActivity.class);
         startActivity(intent);
     }
 

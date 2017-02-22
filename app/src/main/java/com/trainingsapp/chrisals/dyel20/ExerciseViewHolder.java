@@ -14,7 +14,7 @@ public class ExerciseViewHolder extends RecyclerView.ViewHolder {
     public TextView exerciseRep;
     public TextView exerciseWeight;
     public TextView exID;
-    public Button button;
+
 
     public ExerciseViewHolder(View view){
         super(view);
@@ -23,7 +23,6 @@ public class ExerciseViewHolder extends RecyclerView.ViewHolder {
         this.exerciseRep = (TextView) view.findViewById(R.id.reps);
         this.exerciseWeight = (TextView) view.findViewById(R.id.weight);
         this.exID = (TextView) view.findViewById(R.id.ex_id);
-        this.button = (Button) view.findViewById(R.id.btn_delete);
     }
 
 }

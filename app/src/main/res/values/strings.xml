@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">DYEL 2.0</string>
     <string name="title_activity_workout_creator">WorkoutCreatorActivity</string>
+    <string name="title_activity_exercise_registry_view">ExerciseRegistryViewActivity</string>
 </resources>

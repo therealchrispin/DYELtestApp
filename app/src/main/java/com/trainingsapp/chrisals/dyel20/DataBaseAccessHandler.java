@@ -14,7 +14,7 @@ import java.util.Currency;
 public abstract class DataBaseAccessHandler {
     SQLiteDatabase db;
 
-    public abstract ArrayList getAllItem();
+    public abstract ArrayList getAllItems();
 
     public abstract Cursor getCursor();
 

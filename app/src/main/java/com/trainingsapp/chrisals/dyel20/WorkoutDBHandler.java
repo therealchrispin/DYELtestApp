@@ -43,7 +43,7 @@ public class WorkoutDBHandler extends DataBaseAccessHandler {
     }
 
     @Override
-    public ArrayList getAllItem() {
+    public ArrayList getAllItems() {
         Workout wo;
         ArrayList workouts =  new ArrayList();
         Cursor cursor = this.getCursor();

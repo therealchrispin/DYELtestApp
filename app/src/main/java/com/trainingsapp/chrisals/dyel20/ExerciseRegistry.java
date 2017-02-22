@@ -35,10 +35,10 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
     }
 
 
-    public void removeItem(int id){
-        String selection = ExerciseEntry._ID;
-        String[] selctionArgs = {String.valueOf(id)};
-        db.delete(ExerciseEntry.TABLE_NAME, selection,selctionArgs);
+    public void removeItem(int position){
+        String selection = ExerciseEntry._ID + " LIKE ?";
+        String[] selectionArgs = {String.valueOf(getAllItems().get(position).getId())};
+        db.delete(ExerciseEntry.TABLE_NAME, selection, selectionArgs);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
     }
 
     @Override
-    public ArrayList<Exercise> getAllItem(){
+    public ArrayList<Exercise> getAllItems(){
         Exercise ex;
         ArrayList<Exercise> exercises =  new ArrayList<Exercise>();
         Cursor cursor = this.getCursor();
