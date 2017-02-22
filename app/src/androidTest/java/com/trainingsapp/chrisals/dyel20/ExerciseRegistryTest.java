@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ExerciseRegistryTest extends TestCase {
     ExerciseRegistry registry;
 
-    public void setUp() throws Exception{
+    /*public void setUp() throws Exception{
         super.setUp();
         this.registry = new ExerciseRegistry();
         this.registry.createExercise("squat",3,5,100);
@@ -38,5 +38,5 @@ public class ExerciseRegistryTest extends TestCase {
 
     public void testGetAll() throws Exception {
         assertTrue(this.registry.getAll() instanceof ArrayList);
-    }
+    }*/
 }

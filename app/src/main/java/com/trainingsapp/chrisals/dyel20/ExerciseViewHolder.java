@@ -2,6 +2,7 @@ package com.trainingsapp.chrisals.dyel20;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -12,6 +13,8 @@ public class ExerciseViewHolder extends RecyclerView.ViewHolder {
     public TextView exerciseSet;
     public TextView exerciseRep;
     public TextView exerciseWeight;
+    public TextView exID;
+    public Button button;
 
     public ExerciseViewHolder(View view){
         super(view);
@@ -19,6 +22,8 @@ public class ExerciseViewHolder extends RecyclerView.ViewHolder {
         this.exerciseSet = (TextView) view.findViewById(R.id.sets);
         this.exerciseRep = (TextView) view.findViewById(R.id.reps);
         this.exerciseWeight = (TextView) view.findViewById(R.id.weight);
+        this.exID = (TextView) view.findViewById(R.id.ex_id);
+        this.button = (Button) view.findViewById(R.id.btn_delete);
     }
 
 }

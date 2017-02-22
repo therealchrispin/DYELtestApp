@@ -19,7 +19,7 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_creator);
 
-        this.exerciseRegistry = ExerciseRegistry.getInstance(this);
+        this.exerciseRegistry = new ExerciseRegistry(this);
     }
 
 
@@ -27,12 +27,14 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
     public void createExercise(View view){
         this.getEditTextContent();
 
-        this.exerciseRegistry.createExercise(this.exerciseName,
-                Integer.valueOf(this.exerciseSets),
-                Integer.valueOf(this.exerciseReps),
-                Double.valueOf(this.exerciseWeight));
+        Exercise exercise = new Exercise(this.exerciseName,
+                                            Integer.valueOf(this.exerciseSets),
+                                            Integer.valueOf(this.exerciseReps),
+                                            Double.valueOf(this.exerciseWeight));
 
-        Intent intent = new Intent(this, RecyclerViewActivity.class);
+        exerciseRegistry.addExercise(exercise);
+
+        Intent intent = new Intent(this, ExerciseRegistryActivity.class);
         startActivity(intent);
     }
 

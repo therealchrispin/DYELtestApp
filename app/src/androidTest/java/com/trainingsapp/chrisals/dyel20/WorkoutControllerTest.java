@@ -13,7 +13,7 @@ public class WorkoutControllerTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         this.woc = new WorkoutController();
-        this.awo = woc.getActiveWorkouts();
+        //this.awo = woc.getActiveWorkouts();
     }
 
     public void testCreateWorkout() throws Exception {

@@ -29,13 +29,27 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseVi
     }
 
 
-    public void onBindViewHolder(ExerciseViewHolder viewHolder, int position){
+    public void onBindViewHolder(ExerciseViewHolder viewHolder, final int position){
         Exercise exercise = exerciseList.get(position);
+
         this.viewHolder.exerciseName.setText(exercise.getName());
         this.viewHolder.exerciseSet.setText(String.valueOf(exercise.getSets()));
         this.viewHolder.exerciseRep.setText(String.valueOf(exercise.getReps()));
         this.viewHolder.exerciseWeight.setText(String.valueOf(exercise.getWeight()));
+        this.viewHolder.exID.setText(String.valueOf(exercise.getId()));
+
+        this.viewHolder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeItem(position);
+            }
+        });
     }
+
+    private void removeItem(int position){
+
+    }
+
 
     @Override
     public int getItemCount() {

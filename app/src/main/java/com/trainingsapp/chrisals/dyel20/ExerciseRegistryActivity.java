@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
-public class RecyclerViewActivity extends AppCompatActivity {
+public class ExerciseRegistryActivity extends AppCompatActivity {
     private ExerciseRegistry exerciseRegistry;
     private RecyclerView recyclerView;
     private ExerciseRecyclerViewAdapter recyclerViewAdapter;
@@ -22,21 +22,25 @@ public class RecyclerViewActivity extends AppCompatActivity {
         setContentView(R.layout.recycler_view_activityy);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        exerciseRegistry = ExerciseRegistry.getInstance(this);
+
+        exerciseRegistry = new ExerciseRegistry(this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        recyclerViewAdapter = new ExerciseRecyclerViewAdapter(exerciseRegistry.getAll());
+        recyclerViewAdapter = new ExerciseRecyclerViewAdapter(exerciseRegistry.getAllItem());
 
         recyclerView.setAdapter(recyclerViewAdapter);
 
     }
 
     public void callExerciseCreator(View view){
-        exerciseRegistry.saveExercises();
         startActivity(new Intent(this, ExerciseCreatorActivity.class));
+    }
+
+    public void testthisshit(View view){
+    //System.out.print(recyclerView.getChildAdapterPosition(view));
     }
 
 }

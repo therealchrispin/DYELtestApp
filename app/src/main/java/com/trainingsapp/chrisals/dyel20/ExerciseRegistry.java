@@ -1,56 +1,68 @@
 package com.trainingsapp.chrisals.dyel20;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import com.trainingsapp.chrisals.dyel20.DataBaseContract.*;
 
 import java.util.ArrayList;
 
 /**
- * Created by chris.als on 07.02.17.
+ * Created by chris.als on 21.02.17.
  */
-public class ExerciseRegistry extends AbstractExerciseCollection {
+public class ExerciseRegistry extends DataBaseAccessHandler {
+    private SQLiteDatabase db;
+    private String[] projection = {
+            ExerciseEntry._ID,
+            ExerciseEntry.COLUMN_EXERCISE_NAME,
+            ExerciseEntry.COLUMN_EXERCISE_SETS,
+            ExerciseEntry.COLUMN_EXERCISE_REPS,
+            ExerciseEntry.COLUMN_EXERCISE_WEIGHT
+    };
 
-    private ArrayList<Exercise> exercises =  new ArrayList<Exercise>();
-    private static ExerciseRegistry exerciseRegistry;
-    private Context context;
-    private ExerciseDBHandler exerciseDBHandler;
+    public ExerciseRegistry(Context context){
+        DataBase dataBase = new DataBase(context);
+        this.db = dataBase.getWritableDatabase();
+    }
+
+    public void addExercise(Exercise exercise){
+        long row = db.insert(ExerciseEntry.TABLE_NAME,
+                null,
+                this.getValues(exercise.getName(),
+                        exercise.getSets(),
+                        exercise.getReps(),
+                        exercise.getWeight()));
+    }
 
 
-    public static ExerciseRegistry getInstance(Context context){
-        if(exerciseRegistry == null){
-            exerciseRegistry = new ExerciseRegistry(context);
-            exerciseRegistry.getExercisesFromDB();
+    public void removeItem(int id){
+        String selection = ExerciseEntry._ID;
+        String[] selctionArgs = {String.valueOf(id)};
+        db.delete(ExerciseEntry.TABLE_NAME, selection,selctionArgs);
+    }
+
+    @Override
+    public Cursor getCursor() {
+        return db.query(ExerciseEntry.TABLE_NAME, projection, null, null, null, null, null, null);
+    }
+
+    @Override
+    public ArrayList<Exercise> getAllItem(){
+        Exercise ex;
+        ArrayList<Exercise> exercises =  new ArrayList<Exercise>();
+        Cursor cursor = this.getCursor();
+
+        while(cursor.moveToNext()){
+            ex = new Exercise(cursor.getString(cursor.getColumnIndexOrThrow(ExerciseEntry.COLUMN_EXERCISE_NAME)),
+                            cursor.getInt(cursor.getColumnIndexOrThrow(ExerciseEntry.COLUMN_EXERCISE_SETS)),
+                            cursor.getInt(cursor.getColumnIndexOrThrow(ExerciseEntry.COLUMN_EXERCISE_REPS)),
+                            cursor.getDouble(cursor.getColumnIndexOrThrow(ExerciseEntry.COLUMN_EXERCISE_WEIGHT)));
+            ex.setId(cursor.getInt(cursor.getColumnIndexOrThrow(ExerciseEntry._ID)));
+            exercises.add(ex);
+
         }
-        return exerciseRegistry;
+        return exercises;
     }
 
-    private ExerciseRegistry(Context context) {
-        this.context = context;
-    }
 
-    public void createExercise(String name, int sets, int reps, double weight){
-        Exercise ex = new Exercise(name, sets, reps, weight);
-        this.exercises.add(ex);
-    }
-
-    public void remove(int index){
-        this.exercises.remove(index);
-    }
-
-    public Exercise getItem(int exerciseIndex){
-        return this.exercises.get(exerciseIndex);
-    }
-
-    public ArrayList<Exercise> getAll(){
-        return this.exercises;
-    }
-
-    public void saveExercises(){
-        exerciseDBHandler = new ExerciseDBHandler(this.context);
-        exerciseDBHandler.insertExerciseToDB(this.exercises);
-    }
-
-    public void getExercisesFromDB(){
-        exerciseDBHandler = new ExerciseDBHandler(this.context);
-        this.exercises = exerciseDBHandler.getAllItem();
-    }
 }
