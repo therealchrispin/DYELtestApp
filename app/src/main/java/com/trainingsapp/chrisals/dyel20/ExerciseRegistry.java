@@ -23,6 +23,10 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
     public ExerciseRegistry(Context context){
         DataBase dataBase = new DataBase(context);
         this.db = dataBase.getWritableDatabase();
+
+        this.addExercise(new Exercise("d",1,1,1));
+        this.addExercise(new Exercise("d",1,1,1));
+
     }
 
     public void addExercise(Exercise exercise){
@@ -33,7 +37,6 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
                         exercise.getReps(),
                         exercise.getWeight()));
     }
-
 
     public void removeItem(int position){
         String selection = ExerciseEntry._ID + " LIKE ?";
@@ -49,7 +52,7 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
     @Override
     public ArrayList<Exercise> getAllItems(){
         Exercise ex;
-        ArrayList<Exercise> exercises =  new ArrayList<Exercise>();
+        ArrayList<Exercise> exercises =  new ArrayList<>();
         Cursor cursor = this.getCursor();
 
         while(cursor.moveToNext()){

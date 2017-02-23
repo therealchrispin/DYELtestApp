@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * Created by chris.als on 07.02.17.
  */
 public class Workout extends AbstractExerciseCollection implements Observer {
+
+
     private int id;
     private ArrayList<Exercise> exercises;
     private String name;
@@ -49,6 +51,14 @@ public class Workout extends AbstractExerciseCollection implements Observer {
 
     public void addExercise(Exercise ex){
         this.exercises.add(ex);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

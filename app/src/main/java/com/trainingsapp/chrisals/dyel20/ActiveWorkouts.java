@@ -10,6 +10,8 @@ import java.util.Locale;
  * Created by chris.als on 07.02.17.
  */
 public class ActiveWorkouts implements Observable {
+
+
     private ArrayList<Observer> activeWorkouts = new ArrayList<Observer>();
     private String today;
 
