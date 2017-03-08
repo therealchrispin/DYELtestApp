@@ -1,5 +1,6 @@
 package com.trainingsapp.chrisals.dyel20;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -35,11 +36,21 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
                         exercise.getWeight()));
     }
 
+
+    public void updateDBItem(Exercise exercise,int position){
+        ContentValues values = getValues(exercise.getName(),exercise.getReps(),exercise.getSets(),exercise.getWeight());
+        String selection = ExerciseEntry._ID + " LIKE ?";
+        String[] selectionsArgs = {String.valueOf(getAllItems().get(position).getId())};
+        db.update(ExerciseEntry.TABLE_NAME, values, selection, selectionsArgs);
+    }
+
     public void removeItem(int position){
         String selection = ExerciseEntry._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(getAllItems().get(position).getId())};
         db.delete(ExerciseEntry.TABLE_NAME, selection, selectionArgs);
     }
+
+
 
     @Override
     public Cursor getCursor() {

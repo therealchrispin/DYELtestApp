@@ -1,10 +1,20 @@
 package com.trainingsapp.chrisals.dyel20;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.Double2;
+import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +41,17 @@ public class ExerciseDetailViewFragment extends Fragment {
             currentPosition = savedInstanceState.getInt(EXERCISE_POSITION);
         }
 
-        return inflater.inflate(R.layout.activity_exercise_detail, container, false);
+        //Transition slideTransition = TransitionInflater.from(getActivity()).inflateTransition(R.transition.exercise_detail_enter);
+        //slideTransition.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
+        //setEnterTransition(slideTransition);
+
+        //Slide slide = new Slide(Gravity.BOTTOM);
+        //slide.addTarget(R.id.exercise_detail_view);
+        //slide.setInterpolator(AnimationUtils.loadInterpolator(getActivity(), android.R.interpolator.linear_out_slow_in));
+        //slide.setDuration(5000);
+        //setEnterTransition(slide);
+        //
+              return inflater.inflate(R.layout.activity_exercise_detail, container, false);
     }
 
     @Override
@@ -83,10 +103,13 @@ public class ExerciseDetailViewFragment extends Fragment {
 
 
     private void saveExercise(int position) {
-        exReg.getAllItems().get(position).setName(exerciseName.getText().toString());
-        exReg.getAllItems().get(position).setSets(Integer.valueOf(exerciseSets.getText().toString()));
-        exReg.getAllItems().get(position).setReps(Integer.valueOf(exerciseReps.getText().toString()));
-        exReg.getAllItems().get(position).setWeight(Double.valueOf(exerciseWeight.getText().toString()));
+        this.exercise.setName(exerciseName.getText().toString());
+        this.exercise.setSets(Integer.valueOf(exerciseSets.getText().toString()));
+        this.exercise.setReps(Integer.valueOf(exerciseReps.getText().toString()));
+        this.exercise.setWeight(Double.valueOf(exerciseWeight.getText().toString()));
+
+        exReg.updateDBItem(this.exercise,position);
+        startActivity(new Intent(getActivity(), ExerciseSelectorActivity.class));
     }
 
     @Override

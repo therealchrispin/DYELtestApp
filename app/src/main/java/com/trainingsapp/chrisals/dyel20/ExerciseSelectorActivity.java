@@ -4,6 +4,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.widget.EditText;
 
 public class ExerciseSelectorActivity extends FragmentActivity
         implements ExerciseTitleListFragment.onExerciseTitleSelectedListener {
@@ -41,11 +43,18 @@ public class ExerciseSelectorActivity extends FragmentActivity
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+
         transaction.replace(R.id.exercise_title_container, exerciseDetailViewFragment);
-        transaction.addToBackStack(null);
+        //transaction.addToBackStack(null);
 
         transaction.commit();
 
 
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        finish();
     }
 }

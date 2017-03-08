@@ -3,8 +3,12 @@ package com.trainingsapp.chrisals.dyel20;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Trace;
 import android.support.v4.app.ListFragment;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -30,6 +34,11 @@ public class ExerciseTitleListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setExerciseTitles();
+
+        //Transition explodeTransition = TransitionInflater.from(getActivity()).inflateTransition(R.transition.fragment_title_exit);
+        //explodeTransition.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),android.R.interpolator.linear_out_slow_in));
+        //explodeTransition.setDuration(5000);
+        //setExitTransition(explodeTransition);
 
         setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, exerciseTitles));
     }
@@ -62,6 +71,12 @@ public class ExerciseTitleListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
         onExerciseTitleSelectedListener.onExerciseSelected(position);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+
     }
 
 

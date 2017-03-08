@@ -14,11 +14,11 @@ import android.widget.AdapterView.*;
 public class WorkoutCreatorActivity extends AppCompatActivity {
     private WorkoutRegistry workoutRegistry;
     private WeekDay[] workoutWeekday;
-    private Workout workout;
+    public  Workout workout;
     private EditText nameInput;
     private ExerciseRegistry exerciseRegistry;
     private ListView lw;
-
+    public final String NEW_WORKOUT = "New Workout";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,11 +28,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         workoutWeekday = new WeekDay[7];
         workout = new Workout();
         nameInput = (EditText) findViewById(R.id.workout_name_input);
-
-
     }
-
-
 
     public void createWokrout(View view){
         this.workout.setName(nameInput.getText().toString());
@@ -81,8 +77,19 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
                 break;
             }
         }
+
     public void addExercises(View view){
-        startActivity(new Intent(this, ExerciseSelectorActivity.class));
+        createWokrout(view);
+        Intent intent = new Intent(this, ExerciseSelectorActivity.class);
+        //intent.putExtra(NEW_WORKOUT, this.workout);
+        startActivity(intent);
     }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        finish();
+    }
+
 }
 

@@ -51,4 +51,10 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
         this.exerciseWeight = weight.getText().toString();
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        finish();
+    }
+
 }
