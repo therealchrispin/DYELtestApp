@@ -30,7 +30,7 @@ public abstract class DataBaseAccessHandler {
 
     }
 
-    public ContentValues getValues(String name, WeekDay weekDay, boolean isactive){
+    public ContentValues getValues(String name, String weekDay, boolean isactive){
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(WorkoutEntry.COLUMN_WORKOUT_NAME, name);

@@ -25,13 +25,6 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
         DataBase dataBase = new DataBase(context);
         this.db = dataBase.getWritableDatabase();
         activeWorkouts = new ActiveWorkouts();
-
-        addNewWorkout(new Workout("test",WeekDay.Friday));
-        addNewWorkout(new Workout("test",WeekDay.Friday));
-        addNewWorkout(new Workout("test",WeekDay.Friday));
-        addNewWorkout(new Workout("test",WeekDay.Friday));
-        addNewWorkout(new Workout("test",WeekDay.Friday));
-        addNewWorkout(new Workout("test",WeekDay.Friday));
     }
 
     public void addNewWorkout(Workout workout){
@@ -50,8 +43,8 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
         long row = db.insert(DataBaseContract.WorkoutEntry.TABLE_NAME,
                 null,
                 this.getValues(workout.getName(),
-                        workout.getWeekDay(),
-                        workout.isActive()));
+                                workout.getWeekDay().toString(),
+                                workout.isActive()));
     }
 
     public ArrayList<Workout> getAllActiveWorkouts(){
@@ -79,10 +72,22 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
             String ws = cursor.getString(cursor.getColumnIndexOrThrow(WorkoutEntry.COLUMN_WEEKDAY));
 
             wo = new Workout(cursor.getString(cursor.getColumnIndexOrThrow(WorkoutEntry.COLUMN_WORKOUT_NAME)),
-                            WeekDay.valueOf(ws));
+                            this.castStringArraytoWeekdayArray(ws));
             workouts.add(wo);
 
         }
         return workouts;
     }
-}
+
+
+    public WeekDay[] castStringArraytoWeekdayArray(String weekString) {
+        String[] stringweek =  weekString.split(",");
+        WeekDay[] week = new WeekDay[7];
+        for (int i=0;i<stringweek.length;i++){
+            week[i] = WeekDay.valueOf(stringweek[i]);
+        }
+
+        return week;
+
+    }
+ }

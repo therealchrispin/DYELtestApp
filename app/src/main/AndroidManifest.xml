@@ -10,14 +10,18 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ExerciseCreatorActivity" />
         <activity android:name=".ExerciseDetailActivity" />
+        <activity android:name=".WorkoutCreatorActivity" />
+        <activity android:name=".ExerciseSelectorActivity" />
+
         <activity
-            android:name=".RecyclerViewActivity"
-            android:label="@string/title_activity_exercise_registry_view"
+            android:name=".NavigationDrawerViewActivity"
+            android:label="@string/title_activity_navigation_drawer_view"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

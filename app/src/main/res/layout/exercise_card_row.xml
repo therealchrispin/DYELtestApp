@@ -14,39 +14,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/exerciseName"
-                android:text="exerciseName"
-                android:textSize="24sp"
-                android:padding="16dp"
-                android:paddingTop="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:paddingBottom="16dp"
-                android:textColor="#000000"/>
+                android:text="exerciseName"
+                android:textColor="#000000"
+                android:textSize="24sp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/sets"
-                android:text="sets"/>
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/reps"
-                android:text="reps"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/weight"
-                android:text="weight"/>
+                android:text="sets" />
 
             <TextView
+                android:id="@+id/reps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ex_id"/>
+                android:text="reps" />
+
+            <TextView
+                android:id="@+id/weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="weight" />
+
+            <TextView
+                android:id="@+id/ex_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

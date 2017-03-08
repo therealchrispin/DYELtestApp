@@ -34,7 +34,7 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
 
         exerciseRegistry.addExercise(exercise);
 
-        Intent intent = new Intent(this, RecyclerViewActivity.class);
+        Intent intent = new Intent(this, NavigationDrawerViewActivity.class);
         startActivity(intent);
     }
 

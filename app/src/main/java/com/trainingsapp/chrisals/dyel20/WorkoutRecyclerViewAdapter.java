@@ -33,7 +33,7 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
         Workout workout = workoutRegistry.getAllItems().get(position);
 
         this.viewHolder.workoutName.setText(workout.getName());
-        this.viewHolder.weekday.setText(String.valueOf(workout.getWeekDay()));
+        this.viewHolder.weekday.setText(String.valueOf(workout.getWeekDay().toString()));
     }
 
     public void removeItem(int position){

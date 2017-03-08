@@ -12,7 +12,6 @@ public class ActiveWorkoutsTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         this.activeWorkouts = new ActiveWorkouts();
-        this.workout = new Workout("test",WeekDay.Monday);
 
     }
 
@@ -25,7 +24,7 @@ public class ActiveWorkoutsTest extends TestCase {
     }
 
     public void testNotifyObserver() throws Exception {
-        this.activeWorkouts.registerObserver(new Workout("test",WeekDay.Thursday));
+        //this.activeWorkouts.registerObserver(new Workout("test",WeekDay.Thursday));
 
     }
 

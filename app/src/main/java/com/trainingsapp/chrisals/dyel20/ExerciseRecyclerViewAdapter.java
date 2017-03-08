@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 
-import java.util.ArrayList;
-
-
 /**
  * Created by chris.als on 14.02.17.
  */
@@ -26,7 +23,7 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseVi
     }
 
     public ExerciseViewHolder onCreateViewHolder(ViewGroup parent , int viewType){
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.exercise_row,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.exercise_card_row,parent,false);
         this.viewHolder = new ExerciseViewHolder(itemView);
         return this.viewHolder;
     }

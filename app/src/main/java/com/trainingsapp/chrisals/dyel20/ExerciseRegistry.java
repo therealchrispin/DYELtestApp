@@ -24,9 +24,6 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
         DataBase dataBase = new DataBase(context);
         this.db = dataBase.getWritableDatabase();
 
-        this.addExercise(new Exercise("d",1,1,1));
-        this.addExercise(new Exercise("d",1,1,1));
-
     }
 
     public void addExercise(Exercise exercise){

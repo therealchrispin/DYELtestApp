@@ -11,15 +11,20 @@ public class Workout extends AbstractExerciseCollection implements Observer {
     private int id;
     private ArrayList<Exercise> exercises;
     private String name;
-    private WeekDay weekDay;
+    private WeekDay[] weekDays;
     private boolean active;
 
-    public Workout(String name,WeekDay weekday) {
+    public Workout(){
+        //
+    }
+
+
+
+    public Workout(String name,WeekDay[] weekdays) {
         this.name = name;
-        this.weekDay = weekday;
+        this.weekDays = weekdays;
         this.exercises = new ArrayList<Exercise>();
         this.active = true;
-
     }
 
     public boolean isActive() {
@@ -40,12 +45,12 @@ public class Workout extends AbstractExerciseCollection implements Observer {
     }
 
 
-    public WeekDay getWeekDay() {
-        return weekDay;
+    public WeekDay[] getWeekDay() {
+        return weekDays;
     }
 
-    public void setWeekDay(WeekDay weekDay) {
-        this.weekDay = weekDay;
+    public void setWeekDay(WeekDay[] weekDay) {
+        this.weekDays = weekDay;
     }
 
 
@@ -61,12 +66,16 @@ public class Workout extends AbstractExerciseCollection implements Observer {
         this.id = id;
     }
 
-    @Override
     public void update(String weekday) {
-        if (weekday.equals(this.weekDay)) {
-            notifyUser();
+        for(WeekDay w: this.weekDays) {
+            if (weekday.equals(w)) {
+                notifyUser();
+            }
         }
+
     }
+
+
 
 
     public String notifyUser() {
