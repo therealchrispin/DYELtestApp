@@ -19,7 +19,7 @@ public final class DataBaseContract {
 
         public static final String CREATE_EXERCISE_ENTRY = "CREATE TABLE " +
                 TABLE_NAME + " (" +
-                _ID + " INTEGER PRIMARY KEY," +
+                _ID + " TEXT," +
                 COLUMN_EXERCISE_NAME + " TEXT," +
                 COLUMN_EXERCISE_SETS + " TEXT," +
                 COLUMN_EXERCISE_REPS + " TEXT," +
@@ -38,7 +38,7 @@ public final class DataBaseContract {
 
         public static final String CREATE_WORKOUT_ENTRY = "CREATE TABLE " +
                 TABLE_NAME + " (" +
-                _ID + " INTEGER PRIMARY KEY," +
+                _ID + " TEXT," +
                 COLUMN_WORKOUT_NAME + " TEXT," +
                 COLUMN_WEEKDAY + " TEXT," +
                 COLUMN_ACTIVE + " INTEGER)";
@@ -53,9 +53,11 @@ public final class DataBaseContract {
 
         public static final String CREATE_EXERCISE_WORKOUT_ENTRY = "CREATE TABLE " +
                 TABLE_NAME + " (" +
-                _ID + " INTEGER PRIMARY KEY," +
-                EXERCISE_ID + " INTEGER," +
-                WORKOUT_ID + " INTEGER)";
+                _ID + " TEXT," +
+                EXERCISE_ID + " TEXT, " +
+                WORKOUT_ID + " TEXT, " +
+                "FOREIGN KEY ("+EXERCISE_ID+") REFERENCES "+ExerciseEntry.TABLE_NAME+"("+ExerciseEntry._ID+"), " +
+                "FOREIGN KEY ("+WORKOUT_ID+") REFERENCES "+WorkoutEntry.TABLE_NAME+"("+WorkoutEntry._ID+"));";
 
         public static final String SQL_DELETE_Ex_Wo_Entry = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }

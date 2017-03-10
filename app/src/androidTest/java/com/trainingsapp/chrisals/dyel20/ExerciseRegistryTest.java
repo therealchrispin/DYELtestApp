@@ -21,15 +21,15 @@ public class ExerciseRegistryTest extends TestCase {
     }
 
     public void testCreateExercise() throws Exception {
-        int oldsize = this.registry.getAll().size();
+        int oldsize = this.registry.getExercises().size();
         this.registry.createExercise("testEx",1,1,1);
-        assertTrue(oldsize<this.registry.getAll().size());
+        assertTrue(oldsize<this.registry.getExercises().size());
     }
 
     public void testRemove() throws Exception {
-        int oldsize = this.registry.getAll().size();
+        int oldsize = this.registry.getExercises().size();
         this.registry.remove(0);
-        assertTrue(oldsize>this.registry.getAll().size());
+        assertTrue(oldsize>this.registry.getExercises().size());
     }
 
     public void testGetItem() throws Exception {
@@ -37,6 +37,6 @@ public class ExerciseRegistryTest extends TestCase {
     }
 
     public void testGetAll() throws Exception {
-        assertTrue(this.registry.getAll() instanceof ArrayList);
+        assertTrue(this.registry.getExercises() instanceof ArrayList);
     }*/
 }

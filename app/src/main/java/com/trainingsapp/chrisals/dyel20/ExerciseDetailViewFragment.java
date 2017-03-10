@@ -1,24 +1,14 @@
 package com.trainingsapp.chrisals.dyel20;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.renderscript.Double2;
-import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
-import android.transition.Slide;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 /**
  * Created by Alsberg on 05.03.17.
@@ -26,6 +16,9 @@ import android.widget.TextView;
 
 public class ExerciseDetailViewFragment extends Fragment {
     public final static String EXERCISE_POSITION = "position";
+    public final static String EXERCISE_ID = "id";
+    public final static String WORKOUT_ID = "workout id";
+    public String workoutId;
     public int currentPosition = -1;
     private Exercise exercise;
     private Button btn;
@@ -34,6 +27,13 @@ public class ExerciseDetailViewFragment extends Fragment {
     private EditText exerciseReps;
     private EditText exerciseWeight;
     private ExerciseRegistry exReg;
+
+    onSaveExerciseListener onSaveExerciseListener;
+
+    public interface onSaveExerciseListener {
+        public void addExerciseToWorkoutList(String id);
+        public void setWorkoutId(String workoutId);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -65,15 +65,31 @@ public class ExerciseDetailViewFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             // Set article based on argument passed in
-            updateExerciseDetailView(args.getInt(EXERCISE_POSITION));
+            updateExerciseDetailView(args.getString(EXERCISE_ID), args.getInt(EXERCISE_POSITION),args.getString(WORKOUT_ID));
         } else if (currentPosition != -1) {
             // Set article based on saved instance state defined during onCreateView
-            updateExerciseDetailView(currentPosition);
+            updateExerciseDetailView(exercise.getId(),currentPosition, workoutId);
         }
     }
 
-    public void updateExerciseDetailView(final int position) {
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception.
+        try {
+            onSaveExerciseListener = (onSaveExerciseListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement onSaveExerciseListener");
+        }
+    }
+
+    public void updateExerciseDetailView(String id, final int position, String workoutId) {
         this.btn = (Button) getActivity().findViewById(R.id.exercise_dateil_save_button);
+
+        this.workoutId = workoutId;
 
         this.btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +100,7 @@ public class ExerciseDetailViewFragment extends Fragment {
         });
         exReg = new ExerciseRegistry(getActivity());
 
-        this.exercise = exReg.getAllItems().get(position);
+        this.exercise = exReg.getExerciseById(id);
 
         exerciseName = (EditText) getActivity().findViewById(R.id.edit_exercise_name);
         exerciseSets = (EditText) getActivity().findViewById(R.id.edit_exercise_sets);
@@ -109,7 +125,22 @@ public class ExerciseDetailViewFragment extends Fragment {
         this.exercise.setWeight(Double.valueOf(exerciseWeight.getText().toString()));
 
         exReg.updateDBItem(this.exercise,position);
-        startActivity(new Intent(getActivity(), ExerciseSelectorActivity.class));
+
+
+        addExerciseToWorkout(this.exercise.getId());
+
+        Intent intent = new Intent(getActivity(),ExerciseSelectorActivity.class);
+        intent.putExtra(GlobalConstants.WORKOUT_ID, workoutId);
+        startActivity(intent);
+    }
+
+
+    public void addExerciseToWorkout(String id){
+        onSaveExerciseListener.addExerciseToWorkoutList(id);
+    }
+
+    public void setWorkoutId(String workoutId){
+        onSaveExerciseListener.setWorkoutId(workoutId);
     }
 
     @Override
@@ -119,5 +150,7 @@ public class ExerciseDetailViewFragment extends Fragment {
         // Save the current article selection in case we need to recreate the fragment
         outState.putInt(EXERCISE_POSITION, currentPosition);
     }
+
+
 
 }

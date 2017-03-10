@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 /**
  * Created by chris.als on 23.02.17.
  */
@@ -14,9 +16,11 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
     private WorkoutViewHolder viewHolder;
     private Context context;
     private WorkoutRegistry workoutRegistry;
+    private WorkoutExerciseRegistry workoutExerciseRegistry;
 
     public WorkoutRecyclerViewAdapter(Context context) {
         workoutRegistry = new WorkoutRegistry(context);
+        workoutExerciseRegistry = new WorkoutExerciseRegistry(context);
         this.context = context;
     }
 
@@ -34,6 +38,7 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
 
         this.viewHolder.workoutName.setText(workout.getName());
         this.viewHolder.weekday.setText(String.valueOf(workout.getWeekDay().toString()));
+        this.viewHolder.exercises.setText(String.valueOf(workout.getExercises().size()));
     }
 
     public void removeItem(int position){

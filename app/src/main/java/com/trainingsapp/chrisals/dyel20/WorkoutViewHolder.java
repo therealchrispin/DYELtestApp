@@ -10,10 +10,12 @@ import android.widget.TextView;
 public class WorkoutViewHolder extends RecyclerView.ViewHolder{
     public TextView workoutName;
     public TextView weekday;
+    public TextView exercises;
 
     public WorkoutViewHolder(View itemView) {
         super(itemView);
         this.workoutName = (TextView) itemView.findViewById(R.id.workout_name);
         this.weekday = (TextView) itemView.findViewById(R.id.wo_weekday);
+        this.exercises = (TextView) itemView.findViewById(R.id.exercise_list_size_text_view);
     }
 }

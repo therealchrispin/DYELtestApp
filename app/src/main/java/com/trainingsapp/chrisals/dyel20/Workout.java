@@ -1,30 +1,41 @@
 package com.trainingsapp.chrisals.dyel20;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by chris.als on 07.02.17.
  */
-public class Workout extends AbstractExerciseCollection implements Observer {
+public class Workout implements Observer {
+    private String id;
 
 
-    private int id;
     private ArrayList<Exercise> exercises;
     private String name;
-    private WeekDay[] weekDays;
+    private ArrayList<WeekDay> weekDays;
     private boolean active;
 
     public Workout(){
-        //
+        Calendar c = Calendar.getInstance();
+        Date date = c.getTime();
+
+        this.id = this.getName() + "_" + date;
+        this.exercises = new ArrayList<Exercise>();
+        this.active = true;
+
     }
 
+    public Workout(String name,ArrayList<WeekDay> weekdays) {
+        Calendar c = Calendar.getInstance();
+        Date date = c.getTime();
 
-
-    public Workout(String name,WeekDay[] weekdays) {
         this.name = name;
         this.weekDays = weekdays;
         this.exercises = new ArrayList<Exercise>();
         this.active = true;
+
+        this.id = this.getName() + "_" + date;
     }
 
     public boolean isActive() {
@@ -45,11 +56,11 @@ public class Workout extends AbstractExerciseCollection implements Observer {
     }
 
 
-    public WeekDay[] getWeekDay() {
+    public ArrayList<WeekDay> getWeekDay() {
         return weekDays;
     }
 
-    public void setWeekDay(WeekDay[] weekDay) {
+    public void setWeekDay(ArrayList<WeekDay> weekDay) {
         this.weekDays = weekDay;
     }
 
@@ -58,11 +69,11 @@ public class Workout extends AbstractExerciseCollection implements Observer {
         this.exercises.add(ex);
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -72,11 +83,7 @@ public class Workout extends AbstractExerciseCollection implements Observer {
                 notifyUser();
             }
         }
-
     }
-
-
-
 
     public String notifyUser() {
     /*
@@ -86,5 +93,14 @@ public class Workout extends AbstractExerciseCollection implements Observer {
     */
         return "bro do you even lift";
     }
+
+    public ArrayList<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(ArrayList<Exercise> exercises){
+        this.exercises = exercises;
+    }
+
 
 }

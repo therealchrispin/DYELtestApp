@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class WorkoutRegistry extends DataBaseAccessHandler {
 
     private ActiveWorkouts activeWorkouts;
+    private WorkoutExerciseRegistry workoutExerciseRegistry;
     private SQLiteDatabase db;
     private String[] projection = {
             WorkoutEntry._ID,
@@ -24,6 +25,7 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
     public WorkoutRegistry(Context context){
         DataBase dataBase = new DataBase(context);
         this.db = dataBase.getWritableDatabase();
+        this.workoutExerciseRegistry = new WorkoutExerciseRegistry(context);
         activeWorkouts = new ActiveWorkouts();
     }
 
@@ -38,13 +40,23 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
         db.delete(WorkoutEntry.TABLE_NAME, selection, selectionArgs);
     }
 
+    public Workout getWorkoutById(String id) {
+        Workout workout = null;
+        for (Workout wo : getAllItems()) {
+            if (wo.getId().equals(id)) {
+                workout = wo;
+            }
+        }
+        return workout;
+    }
 
     private void addWorkoutToDB(Workout workout){
-        long row = db.insert(DataBaseContract.WorkoutEntry.TABLE_NAME,
+        long row = db.insert(WorkoutEntry.TABLE_NAME,
                 null,
                 this.getValues(workout.getName(),
-                                workout.getWeekDay().toString(),
-                                workout.isActive()));
+                                arrayListToString(workout.getWeekDay()),
+                                workout.isActive(),
+                                workout.getId()));
     }
 
     public ArrayList<Workout> getAllActiveWorkouts(){
@@ -72,22 +84,41 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
             String ws = cursor.getString(cursor.getColumnIndexOrThrow(WorkoutEntry.COLUMN_WEEKDAY));
 
             wo = new Workout(cursor.getString(cursor.getColumnIndexOrThrow(WorkoutEntry.COLUMN_WORKOUT_NAME)),
-                            this.castStringArraytoWeekdayArray(ws));
+                            this.stringToWeekdayArrayList(ws));
+
+            wo.setId(cursor.getString(cursor.getColumnIndexOrThrow(WorkoutEntry._ID)));
+            wo.setExercises(getExerciseListFromWorkoutId(wo.getId()));
             workouts.add(wo);
 
         }
         return workouts;
     }
 
+    private ArrayList<Exercise> getExerciseListFromWorkoutId(String id){
+        return workoutExerciseRegistry.getExerciseByWorkoutId(id);
+    }
 
-    public WeekDay[] castStringArraytoWeekdayArray(String weekString) {
+
+
+    private ArrayList<WeekDay> stringToWeekdayArrayList(String weekString) {
         String[] stringweek =  weekString.split(",");
-        WeekDay[] week = new WeekDay[7];
+
+        ArrayList<WeekDay> week = new ArrayList<>();
+
         for (int i=0;i<stringweek.length;i++){
-            week[i] = WeekDay.valueOf(stringweek[i]);
+            week.add(WeekDay.valueOf(stringweek[i]));
         }
 
         return week;
 
     }
+
+    private String arrayListToString(ArrayList<WeekDay> list){
+        String weekdays = "";
+        for(WeekDay day:list){
+            weekdays = weekdays + day + ",";
+        }
+        return weekdays;
+    }
+
  }

@@ -20,13 +20,13 @@ import java.util.ArrayList;
 
 public class ExerciseTitleListFragment extends ListFragment {
     private ArrayList<String> exerciseTitles;
-
+    protected ExerciseRegistry exerciseRegistry;
 
     onExerciseTitleSelectedListener onExerciseTitleSelectedListener;
 
 
     public interface onExerciseTitleSelectedListener {
-        public void onExerciseSelected(int postion);
+        public void onExerciseSelected(String id, int position);
     }
 
 
@@ -45,7 +45,7 @@ public class ExerciseTitleListFragment extends ListFragment {
 
     public void setExerciseTitles(){
         exerciseTitles = new ArrayList<>();
-        ExerciseRegistry exerciseRegistry = new ExerciseRegistry(getContext());
+        exerciseRegistry = new ExerciseRegistry(getContext());
         ArrayList<Exercise> exercises = exerciseRegistry.getAllItems();
 
         for(int i=0;i<exercises.size();i++){
@@ -70,7 +70,9 @@ public class ExerciseTitleListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
-        onExerciseTitleSelectedListener.onExerciseSelected(position);
+        String Exid = exerciseRegistry.getAllItems().get(position).getId();
+
+        onExerciseTitleSelectedListener.onExerciseSelected(Exid, position);
     }
 
     @Override
@@ -78,8 +80,4 @@ public class ExerciseTitleListFragment extends ListFragment {
         super.onPause();
 
     }
-
-
-
-
 }

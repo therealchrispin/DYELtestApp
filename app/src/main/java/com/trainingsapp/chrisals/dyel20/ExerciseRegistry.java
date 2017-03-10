@@ -24,8 +24,19 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
     public ExerciseRegistry(Context context){
         DataBase dataBase = new DataBase(context);
         this.db = dataBase.getWritableDatabase();
+        if(this.getAllItems().size() == 0){
+            this.createDefaultExercises();
+        }
 
     }
+
+    private void createDefaultExercises() {
+        for(String name:ExerciseNames.EXERCISE_NAMES){
+            Exercise ex = new Exercise(name, 0, 0,0);
+            this.addExercise(ex);
+        }
+    }
+
 
     public void addExercise(Exercise exercise){
         long row = db.insert(ExerciseEntry.TABLE_NAME,
@@ -33,24 +44,42 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
                 this.getValues(exercise.getName(),
                         exercise.getSets(),
                         exercise.getReps(),
-                        exercise.getWeight()));
+                        exercise.getWeight(),
+                        exercise.getId()));
     }
 
 
     public void updateDBItem(Exercise exercise,int position){
-        ContentValues values = getValues(exercise.getName(),exercise.getReps(),exercise.getSets(),exercise.getWeight());
+        ContentValues values = getValues(exercise.getName(),exercise.getReps(),exercise.getSets(),exercise.getWeight(),exercise.getId());
         String selection = ExerciseEntry._ID + " LIKE ?";
-        String[] selectionsArgs = {String.valueOf(getAllItems().get(position).getId())};
+        String[] selectionsArgs = {getAllItems().get(position).getId()};
         db.update(ExerciseEntry.TABLE_NAME, values, selection, selectionsArgs);
     }
 
-    public void removeItem(int position){
+    public void removeItem(String id){
         String selection = ExerciseEntry._ID + " LIKE ?";
-        String[] selectionArgs = {String.valueOf(getAllItems().get(position).getId())};
+        String exId = "";
+
+        for(Exercise ex: getAllItems()){
+            if(ex.getId().equals(id)) {
+                    exId = ex.getId();
+                }
+            }
+
+        String[] selectionArgs = {exId};
+
         db.delete(ExerciseEntry.TABLE_NAME, selection, selectionArgs);
     }
 
-
+    public Exercise getExerciseById(String id){
+        Exercise exercise = null;
+        for(Exercise ex:getAllItems()) {
+            if (ex.getId().equals(id)) {
+                exercise = ex;
+            }
+        }
+        return exercise;
+    }
 
     @Override
     public Cursor getCursor() {
@@ -68,12 +97,14 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
                             cursor.getInt(cursor.getColumnIndexOrThrow(ExerciseEntry.COLUMN_EXERCISE_SETS)),
                             cursor.getInt(cursor.getColumnIndexOrThrow(ExerciseEntry.COLUMN_EXERCISE_REPS)),
                             cursor.getDouble(cursor.getColumnIndexOrThrow(ExerciseEntry.COLUMN_EXERCISE_WEIGHT)));
-            ex.setId(cursor.getInt(cursor.getColumnIndexOrThrow(ExerciseEntry._ID)));
+            ex.setId(cursor.getString(cursor.getColumnIndexOrThrow(ExerciseEntry._ID)));
             exercises.add(ex);
 
         }
         return exercises;
     }
+
+
 
 
 }

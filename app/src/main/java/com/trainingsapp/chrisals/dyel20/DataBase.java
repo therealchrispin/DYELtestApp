@@ -26,7 +26,7 @@ public class DataBase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(ExerciseEntry.CREATE_EXERCISE_ENTRY);
         db.execSQL(WorkoutEntry.CREATE_WORKOUT_ENTRY);
-        db.execSQL(ExerciseWorkoutEntry.CREATE_EXERCISE_WORKOUT_ENTRY) ;
+        db.execSQL(ExerciseWorkoutEntry.CREATE_EXERCISE_WORKOUT_ENTRY);
     }
 
     @Override
