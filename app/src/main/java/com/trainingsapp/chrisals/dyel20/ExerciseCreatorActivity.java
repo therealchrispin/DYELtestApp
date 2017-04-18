@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.trainingsapp.chrisals.dyel20.Exercise;
+import com.trainingsapp.chrisals.dyel20.ExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.NavigationDrawerViewActivity;
+import com.trainingsapp.chrisals.dyel20.R;
+
 public class ExerciseCreatorActivity extends AppCompatActivity {
     private ExerciseRegistry exerciseRegistry;
     private String exerciseName;

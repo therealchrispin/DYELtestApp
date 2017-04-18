@@ -10,6 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.trainingsapp.chrisals.dyel20.Exercise;
+import com.trainingsapp.chrisals.dyel20.ExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.ExerciseSelectorActivity;
+import com.trainingsapp.chrisals.dyel20.GlobalConstants;
+import com.trainingsapp.chrisals.dyel20.R;
+
 /**
  * Created by Alsberg on 05.03.17.
  */

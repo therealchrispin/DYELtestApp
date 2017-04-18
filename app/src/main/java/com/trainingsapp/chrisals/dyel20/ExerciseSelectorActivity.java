@@ -4,9 +4,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class ExerciseSelectorActivity extends FragmentActivity
         implements ExerciseTitleListFragment.onExerciseTitleSelectedListener,
                     ExerciseDetailViewFragment.onSaveExerciseListener{
@@ -70,5 +67,10 @@ public class ExerciseSelectorActivity extends FragmentActivity
     @Override
     public void setWorkoutId(String workoutId) {
         this.workoutID = workoutId;
+    }
+
+    @Override
+    public void returnToWorkoutView() {
+
     }
 }

@@ -27,6 +27,7 @@ public class ExerciseTitleListFragment extends ListFragment {
 
     public interface onExerciseTitleSelectedListener {
         public void onExerciseSelected(String id, int position);
+        public void returnToWorkoutView();
     }
 
 
@@ -39,7 +40,7 @@ public class ExerciseTitleListFragment extends ListFragment {
         //explodeTransition.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),android.R.interpolator.linear_out_slow_in));
         //explodeTransition.setDuration(5000);
         //setExitTransition(explodeTransition);
-
+        // TODO: 10.03.17 make Custom ArrayAdapter
         setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, exerciseTitles));
     }
 
