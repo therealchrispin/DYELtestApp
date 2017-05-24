@@ -14,18 +14,29 @@ public class Exercise {
     private int sets;
     private int reps;
     private double weight;
+    private int order;
 
     public Exercise(String name, int sets, int reps, double weight) {
         Calendar c = Calendar.getInstance();
         Date date = c.getTime();
+
 
         this.name = name;
         this.sets = sets;
         this.reps = reps;
         this.weight = weight;
 
+
         this.id = this.getName() + "_" + date;
 
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public String getName() {
@@ -67,4 +78,5 @@ public class Exercise {
     public void setId(String id) {
         this.id = id;
     }
+
 }

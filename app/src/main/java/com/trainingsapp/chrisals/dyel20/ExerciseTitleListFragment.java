@@ -3,13 +3,10 @@ package com.trainingsapp.chrisals.dyel20;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Trace;
 import android.support.v4.app.ListFragment;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -34,25 +31,32 @@ public class ExerciseTitleListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setExerciseTitles();
-
+        setUpBtn();
         //Transition explodeTransition = TransitionInflater.from(getActivity()).inflateTransition(R.transition.fragment_title_exit);
         //explodeTransition.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),android.R.interpolator.linear_out_slow_in));
         //explodeTransition.setDuration(5000);
         //setExitTransition(explodeTransition);
-        // TODO: 10.03.17 make Custom ArrayAdapter
-        setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, exerciseTitles));
+
+        // TODO: make Custom ArrayAdapter
+        //setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, exerciseTitles));
+
+
+        ExerciseArrayAdapter arrayAdapter = new ExerciseArrayAdapter(getActivity());
+        setListAdapter(arrayAdapter);
+
     }
 
-    public void setExerciseTitles(){
-        exerciseTitles = new ArrayList<>();
-        exerciseRegistry = new ExerciseRegistry(getContext());
-        ArrayList<Exercise> exercises = exerciseRegistry.getAllItems();
 
-        for(int i=0;i<exercises.size();i++){
-            String name = exercises.get(i).getName();
-            this.exerciseTitles.add(name);
-        }
+    public void setUpBtn(){
+        Button btn = (Button) getActivity().findViewById(R.id.button2);
+
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onExerciseTitleSelectedListener.returnToWorkoutView();
+            }
+        });
     }
 
     @Override
@@ -75,6 +79,9 @@ public class ExerciseTitleListFragment extends ListFragment {
 
         onExerciseTitleSelectedListener.onExerciseSelected(Exid, position);
     }
+
+
+
 
     @Override
     public void onPause(){

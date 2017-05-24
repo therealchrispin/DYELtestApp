@@ -1,10 +1,15 @@
 package com.trainingsapp.chrisals.dyel20;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -33,17 +38,42 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
     }
 
     @Override
-    public void onBindViewHolder(WorkoutViewHolder holder, int position) {
-        Workout workout = workoutRegistry.getAllItems().get(position);
+    public void onBindViewHolder(WorkoutViewHolder holder,final int position) {
+        this.setUpWorkoutRow(workoutRegistry.getAllItems().get(position));
+
+
+        this.viewHolder.detailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, WorkoutDetailViewActivity.class);
+                intent.putExtra(GlobalConstants.WORKOUT_ID, workoutRegistry.getAllItems().get(position).getId());
+                context.startActivity(intent);
+            }
+        });
+
+    }
+
+
+    public void setUpWorkoutRow(Workout workout){
 
         this.viewHolder.workoutName.setText(workout.getName());
-        this.viewHolder.weekday.setText(String.valueOf(workout.getWeekDay().toString()));
-        this.viewHolder.exercises.setText(String.valueOf(workout.getExercises().size()));
+        this.viewHolder.weekdays.setText(this.buildString(workout.getWeekDay()));
     }
 
-    public void removeItem(int position){
-        workoutRegistry.removeItem(position);
+    public String buildString(ArrayList<WeekDay> weekDays){
+        String weekdayString = "";
+
+        for (int i=0;i<weekDays.size();i++){
+            if(i!=weekDays.size()-1){
+                weekdayString = weekdayString + String.valueOf(weekDays.get(i)) + ", ";
+            }else {
+                weekdayString = weekdayString + String.valueOf(weekDays.get(i));
+            }
+        }
+
+        return weekdayString;
     }
+
 
     @Override
     public int getItemCount() {

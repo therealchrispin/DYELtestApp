@@ -95,7 +95,7 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
     }
 
     private ArrayList<Exercise> getExerciseListFromWorkoutId(String id){
-        return workoutExerciseRegistry.getExerciseByWorkoutId(id);
+        return workoutExerciseRegistry.getExerciseListByWorkoutId(id);
     }
 
 

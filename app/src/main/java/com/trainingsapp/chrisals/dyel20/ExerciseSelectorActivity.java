@@ -1,5 +1,6 @@
 package com.trainingsapp.chrisals.dyel20;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -13,12 +14,12 @@ public class ExerciseSelectorActivity extends FragmentActivity
     protected ExerciseRegistry registry;
     protected WorkoutRegistry workoutRegistry;
     protected WorkoutExerciseRegistry workoutExerciseRegistry;
+    private int exerciseOrder = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_selector);
-
         this.workoutID = getIntent().getStringExtra(GlobalConstants.WORKOUT_ID);
 
         if(findViewById(R.id.exercise_title_container) != null){
@@ -54,14 +55,12 @@ public class ExerciseSelectorActivity extends FragmentActivity
         //transaction.addToBackStack(null);
 
         transaction.commit();
-
-
     }
 
     @Override
     public void addExerciseToWorkoutList(String exerciseId) {
-        this.workoutExerciseRegistry = new WorkoutExerciseRegistry(this);
-        this.workoutExerciseRegistry.addExerciseToWorkout(exerciseId, this.workoutID);
+        this.workoutExerciseRegistry = new WorkoutExerciseRegistry(this, this.workoutID);
+        this.workoutExerciseRegistry.addExerciseToWorkout(exerciseId, exerciseOrder);
     }
 
     @Override
@@ -71,6 +70,9 @@ public class ExerciseSelectorActivity extends FragmentActivity
 
     @Override
     public void returnToWorkoutView() {
+        Intent intent = new Intent(this, NavigationDrawerViewActivity.class);
+        intent.putExtra(GlobalConstants.EXTRA_VIEW, GlobalConstants.WORKOUT_VIEW);
+        startActivity(intent);
 
     }
 }

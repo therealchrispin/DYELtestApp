@@ -46,7 +46,32 @@ public class NavigationDrawerViewActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        this.setRecyclerViewExerciseAdapter();
+        this.setUpView();
+
+    }
+
+
+    public void setUpView(){
+        if(getIntent().getStringExtra(GlobalConstants.EXTRA_VIEW) != null){
+            chooseView();
+        }else {
+            this.setRecyclerViewExerciseAdapter();
+        }
+    }
+
+    public void chooseView(){
+        String view = getIntent().getStringExtra(GlobalConstants.EXTRA_VIEW);
+
+        switch (view){
+            case GlobalConstants.EXERCISE_VIEW:
+                this.setRecyclerViewExerciseAdapter();
+                break;
+            case GlobalConstants.WORKOUT_VIEW:
+                this.setRecyclerViewWorkoutAdapter();
+                break;
+            default:
+                this.setRecyclerViewExerciseAdapter();
+        }
 
     }
 
@@ -120,5 +145,7 @@ public class NavigationDrawerViewActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
 }

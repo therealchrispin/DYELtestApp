@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.trainingsapp.chrisals.dyel20.DataBaseContract.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by chris.als on 10.03.17.
@@ -18,8 +21,18 @@ public class WorkoutExerciseRegistry {
     private String[] projection = {
             ExerciseWorkoutEntry._ID,
             ExerciseWorkoutEntry.EXERCISE_ID,
-            ExerciseWorkoutEntry.WORKOUT_ID
+            ExerciseWorkoutEntry.WORKOUT_ID,
+            ExerciseWorkoutEntry.COLUMN_EXERCISE_ORDER
     };
+
+    private String workoutID;
+
+    public WorkoutExerciseRegistry(Context context, String workoutId) {
+        DataBase dataBase = new DataBase(context);
+        this.exerciseRegistry = new ExerciseRegistry(context);
+        this.db = dataBase.getWritableDatabase();
+        this.workoutID = workoutId;
+    }
 
     public WorkoutExerciseRegistry(Context context) {
         DataBase dataBase = new DataBase(context);
@@ -27,11 +40,18 @@ public class WorkoutExerciseRegistry {
         this.db = dataBase.getWritableDatabase();
     }
 
-    public void addExerciseToWorkout(String exerciseID, String workoutId){
+    public void saveExerciseList(ArrayList<Exercise> exercises){
+        for(int i=0;i<exercises.size();i++){
+            this.addExerciseToWorkout(exercises.get(i).getId(),i);
+        }
+    }
+
+    public void addExerciseToWorkout(String exerciseID, int exerciseOrder){
         ContentValues values = new ContentValues();
 
         values.put(ExerciseWorkoutEntry.EXERCISE_ID, exerciseID);
-        values.put(ExerciseWorkoutEntry.WORKOUT_ID, workoutId);
+        values.put(ExerciseWorkoutEntry.WORKOUT_ID, this.workoutID);
+        values.put(ExerciseWorkoutEntry.COLUMN_EXERCISE_ORDER, exerciseOrder);
 
         long row = db.insert(ExerciseWorkoutEntry.TABLE_NAME, null, values);
     }
@@ -49,15 +69,34 @@ public class WorkoutExerciseRegistry {
                 null);
     }
 
-    public ArrayList<Exercise> getExerciseByWorkoutId(String  workoutId){
+    public ArrayList<Exercise> getExerciseListByWorkoutId(String  workoutId){
         Cursor cursor = getCursorByWorkoutId(workoutId);
 
-        ArrayList<Exercise> exercises = new ArrayList<>();
+
+        ArrayList<Exercise> exerciseList = new ArrayList<>();
+
 
         while(cursor.moveToNext()){
             String exId = cursor.getString(cursor.getColumnIndexOrThrow(ExerciseWorkoutEntry.EXERCISE_ID));
-            exercises.add(exerciseRegistry.getExerciseById(exId));
+            int exOrd = cursor.getInt(cursor.getColumnIndexOrThrow(ExerciseWorkoutEntry.COLUMN_EXERCISE_ORDER));
+
+            Exercise exercise = exerciseRegistry.getExerciseById(exId);
+            exercise.setOrder(exOrd);
+
+            exerciseList.add(exercise);
+            this.sorteExerciseListByOrder(exerciseList);
+
+
         }
-        return exercises;
+        return exerciseList;
+    }
+
+    public void sorteExerciseListByOrder(ArrayList<Exercise> exercises){
+        Collections.sort(exercises, new Comparator<Exercise>() {
+            @Override
+            public int compare(Exercise lhs, Exercise rhs) {
+                return lhs.getOrder() - rhs.getOrder();
+            }
+        });
     }
 }

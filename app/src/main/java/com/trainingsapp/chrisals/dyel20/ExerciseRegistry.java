@@ -49,10 +49,10 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
     }
 
 
-    public void updateDBItem(Exercise exercise,int position){
+    public void updateDBItem(Exercise exercise){
         ContentValues values = getValues(exercise.getName(),exercise.getReps(),exercise.getSets(),exercise.getWeight(),exercise.getId());
         String selection = ExerciseEntry._ID + " LIKE ?";
-        String[] selectionsArgs = {getAllItems().get(position).getId()};
+        String[] selectionsArgs = {exercise.getId()};
         db.update(ExerciseEntry.TABLE_NAME, values, selection, selectionsArgs);
     }
 

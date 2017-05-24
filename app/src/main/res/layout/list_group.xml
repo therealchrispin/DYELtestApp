@@ -3,16 +3,41 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp"
-    android:background="#000000">
+    android:padding="8dp">
 
 
     <TextView
-        android:id="@+id/lblListHeader"
-        android:layout_width="fill_parent"
+        android:id="@+id/exercise_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textSize="17dp"
-        android:textColor="#f9f93d" />
+        android:padding="16dp"
+        android:text="TEST"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/weight_string"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="Weight" />
+
+            <TextView
+                android:id="@+id/exercise_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:text="100 " />
+        </TableRow>
+
+    </TableLayout>
 
 </LinearLayout>

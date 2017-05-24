@@ -100,7 +100,7 @@ public class ExerciseDetailViewFragment extends Fragment {
         this.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveExercise(position);
+                saveExercise();
             }
 
         });
@@ -124,13 +124,13 @@ public class ExerciseDetailViewFragment extends Fragment {
     }
 
 
-    private void saveExercise(int position) {
+    private void saveExercise() {
         this.exercise.setName(exerciseName.getText().toString());
         this.exercise.setSets(Integer.valueOf(exerciseSets.getText().toString()));
         this.exercise.setReps(Integer.valueOf(exerciseReps.getText().toString()));
         this.exercise.setWeight(Double.valueOf(exerciseWeight.getText().toString()));
 
-        exReg.updateDBItem(this.exercise,position);
+        exReg.updateDBItem(this.exercise);
 
 
         addExerciseToWorkout(this.exercise.getId());
@@ -138,6 +138,7 @@ public class ExerciseDetailViewFragment extends Fragment {
         Intent intent = new Intent(getActivity(),ExerciseSelectorActivity.class);
         intent.putExtra(GlobalConstants.WORKOUT_ID, workoutId);
         startActivity(intent);
+
     }
 
 
