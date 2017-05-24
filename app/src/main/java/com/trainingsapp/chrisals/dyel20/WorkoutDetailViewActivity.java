@@ -4,11 +4,8 @@ import com.trainingsapp.chrisals.dyel20.View.TouchInterceptor;
 import com.trainingsapp.chrisals.dyel20.View.TouchInterceptor.*;
 import android.app.ListActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import android.widget.TextView;
 
 public class WorkoutDetailViewActivity extends ListActivity {
     private Workout workout;
@@ -55,15 +52,14 @@ public class WorkoutDetailViewActivity extends ListActivity {
         interceptorList = (TouchInterceptor) getListView();
         interceptorList.setDropListener(dropListener);
 
-        //ArrayAdapter<Object> arrayAdapter = new ArrayAdapter<Object>(this, R.layout.list_item, R.id.lblListItem, exerciseList);
-
         ExerciseArrayAdapter arrayAdapter = new ExerciseArrayAdapter(this, this.workout.getExercises());
         setListAdapter(arrayAdapter);
-
-
     }
 
     public void setUpView(){
+        TextView workoutName = (TextView) findViewById(R.id.workout_name);
+        workoutName.setText(this.workout.getName());
+
         if(this.workout.getExercises().size()>0){
             this.exerciseList = new Exercise[this.workout.getExercises().size()];
             for(int i=0;i<this.workout.getExercises().size();i++){

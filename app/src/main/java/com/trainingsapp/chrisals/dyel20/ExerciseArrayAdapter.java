@@ -21,18 +21,13 @@ public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
     private ExerciseRegistry exerciseRegistry;
     private ArrayList<Exercise> exerciseArrayList;
 
-    private static class ViewHolder{
-        TextView exerciseTitle;
-        TextView exerciseWeight;
-    }
-
-
     public ExerciseArrayAdapter(Context context, ArrayList<Exercise> exerciseArrayList) {
         super(context, R.layout.list_group, exerciseArrayList);
         this.context = context;
         this.exerciseArrayList = exerciseArrayList;
 
     }
+
 
     public ExerciseArrayAdapter(Context context) {
         super(context, R.layout.list_group);
@@ -42,14 +37,13 @@ public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
         this.exerciseArrayList = this.exerciseRegistry.getAllItems();
     }
 
-
     @Override
     public View getView(int position, View mView, ViewGroup parent){
 
         Exercise exercise = exerciseArrayList.get(position);
 
         if(mView == null) {
-            mView = LayoutInflater.from(getContext()).inflate(R.layout.list_group, parent, false);
+            mView = LayoutInflater.from(this.context).inflate(R.layout.list_group, parent, false);
         }
         ViewHolder viewHolder = new ViewHolder();
 
@@ -63,10 +57,13 @@ public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
 
     }
 
+    @Override
+    public int getCount() {
+        return exerciseArrayList.size();
+    }
 
-
-
-
-
-
+    private static class ViewHolder{
+        TextView exerciseTitle;
+        TextView exerciseWeight;
+    }
 }

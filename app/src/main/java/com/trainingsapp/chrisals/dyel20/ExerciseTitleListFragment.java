@@ -16,41 +16,24 @@ import java.util.ArrayList;
  */
 
 public class ExerciseTitleListFragment extends ListFragment {
-    private ArrayList<String> exerciseTitles;
     protected ExerciseRegistry exerciseRegistry;
-
     onExerciseTitleSelectedListener onExerciseTitleSelectedListener;
-
-
-    public interface onExerciseTitleSelectedListener {
-        public void onExerciseSelected(String id, int position);
-        public void returnToWorkoutView();
-    }
-
+    private ArrayList<String> exerciseTitles;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUpBtn();
-        //Transition explodeTransition = TransitionInflater.from(getActivity()).inflateTransition(R.transition.fragment_title_exit);
-        //explodeTransition.setInterpolator(AnimationUtils.loadInterpolator(getActivity(),android.R.interpolator.linear_out_slow_in));
-        //explodeTransition.setDuration(5000);
-        //setExitTransition(explodeTransition);
 
-        // TODO: make Custom ArrayAdapter
-        //setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, exerciseTitles));
-
+        this.exerciseRegistry = new ExerciseRegistry(getActivity());
 
         ExerciseArrayAdapter arrayAdapter = new ExerciseArrayAdapter(getActivity());
         setListAdapter(arrayAdapter);
 
     }
 
-
     public void setUpBtn(){
         Button btn = (Button) getActivity().findViewById(R.id.button2);
-
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,16 +59,16 @@ public class ExerciseTitleListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
         String Exid = exerciseRegistry.getAllItems().get(position).getId();
-
         onExerciseTitleSelectedListener.onExerciseSelected(Exid, position);
     }
-
-
-
 
     @Override
     public void onPause(){
         super.onPause();
+    }
 
+    public interface onExerciseTitleSelectedListener {
+        void onExerciseSelected(String id, int position);
+        void returnToWorkoutView();
     }
 }

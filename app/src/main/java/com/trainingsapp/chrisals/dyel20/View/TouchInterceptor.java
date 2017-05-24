@@ -110,7 +110,7 @@ public class TouchInterceptor extends ListView {
                     if (itemnum == AdapterView.INVALID_POSITION) {
                         break;
                     }
-                    TextView item = (TextView) getChildAt(itemnum - getFirstVisiblePosition());
+                    ViewGroup item = (ViewGroup) getChildAt(itemnum - getFirstVisiblePosition());
                     mDragPointX = x - item.getLeft();
                     mDragPointY = y - item.getTop();
                     mXOffset = ((int) ev.getRawX()) - x;
