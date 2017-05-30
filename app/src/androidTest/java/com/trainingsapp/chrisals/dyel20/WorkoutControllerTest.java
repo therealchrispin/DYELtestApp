@@ -1,5 +1,8 @@
 package com.trainingsapp.chrisals.dyel20;
 
+import com.trainingsapp.chrisals.dyel20.core.ActiveWorkouts;
+import com.trainingsapp.chrisals.dyel20.core.Workout;
+
 import junit.framework.TestCase;
 
 /**

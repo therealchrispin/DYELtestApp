@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_workout_creator2"
+    android:id="@+id/activity_workout_creator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.trainingsapp.chrisals.dyel20.WorkoutCreatorActivity">
+    tools:context="com.trainingsapp.chrisals.dyel20.Activities.WorkoutCreatorActivity">
 
     <TextView
         android:textColor="#000000"
@@ -31,11 +31,11 @@
         android:onClick="onCheckBoxClick"/>
 
     <CheckBox
-        android:text="@string/tuesday"
+        android:id="@+id/checkbox_tuesday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkbox_tuesday"
-        android:onClick="onCheckBoxClick"/>
+        android:onClick="onCheckBoxClick"
+        android:text="@string/tuesday" />
 
     <CheckBox
         android:text="@string/wednesday"
@@ -59,19 +59,19 @@
         android:onClick="onCheckBoxClick"/>
 
     <CheckBox
-        android:text="Saturday"
+        android:id="@+id/checkbox_saturday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkbox_saturday"
-        android:onClick="onCheckBoxClick"/>
+        android:onClick="onCheckBoxClick"
+        android:text="@string/saturday" />
 
     <CheckBox
-        android:text="Sunday"
+        android:id="@+id/checkbox_sunday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkbox_sunday"
         android:checked="false"
-        android:onClick="onCheckBoxClick"/>
+        android:onClick="onCheckBoxClick"
+        android:text="@string/sunday" />
 
     <Button
         android:text="Add Exercises"
@@ -80,21 +80,5 @@
         android:id="@+id/button"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:onClick="addExercises"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/exercise_list_view">
-
-
-
-
-        </ListView>
-    </FrameLayout>
-
 
 </LinearLayout>

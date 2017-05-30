@@ -1,8 +1,8 @@
 package com.trainingsapp.chrisals.dyel20;
 
-import junit.framework.TestCase;
+import com.trainingsapp.chrisals.dyel20.DataBase.ExerciseRegistry;
 
-import java.util.ArrayList;
+import junit.framework.TestCase;
 
 /**
  * Created by chris.als on 09.02.17.
