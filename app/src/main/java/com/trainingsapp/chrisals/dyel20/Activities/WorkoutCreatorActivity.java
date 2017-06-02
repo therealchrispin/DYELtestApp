@@ -8,8 +8,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.ExerciseRegistry;
-import com.trainingsapp.chrisals.dyel20.DataBase.WorkoutRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.DBRegistryFacade;
+import com.trainingsapp.chrisals.dyel20.DB.WorkoutRegistry;
 import com.trainingsapp.chrisals.dyel20.core.GlobalConstants;
 import com.trainingsapp.chrisals.dyel20.R;
 import com.trainingsapp.chrisals.dyel20.core.WeekDay;
@@ -18,24 +18,32 @@ import com.trainingsapp.chrisals.dyel20.core.Workout;
 import java.util.ArrayList;
 
 public class WorkoutCreatorActivity extends AppCompatActivity {
-    private WorkoutRegistry workoutRegistry;
     private ArrayList<WeekDay> workoutWeekday;
     public Workout workout;
     private EditText nameInput;
-    protected ExerciseRegistry exerciseRegistry;
+    protected DBRegistryFacade registry;
+    private boolean workoutExists = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_creator);
 
-        this.workoutRegistry = new WorkoutRegistry(this);
-        this.exerciseRegistry = new ExerciseRegistry(this);
+        this.registry = DBRegistryFacade.getInstance(this);
         this.nameInput = (EditText) findViewById(R.id.workout_name_input);
 
         this.setUpWorkout();
 
     }
+
+    public void setUpWorkout(){
+        if(getIntent().getStringExtra(GlobalConstants.WORKOUT_ID) == null){
+            setUpNewWorkout();
+        }else {
+            setUpExistingWorkout();
+        }
+    }
+
 
     public void setUpNewWorkout(){
         this.workoutWeekday = new ArrayList<>();
@@ -43,12 +51,12 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     }
 
     public void setUpExistingWorkout(){
-        this.workout = workoutRegistry.getWorkoutById(getIntent().getStringExtra(GlobalConstants.WORKOUT_ID));
+        this.workout = registry.getWorkoutByID(getIntent().getStringExtra(GlobalConstants.WORKOUT_ID));
         this.workoutWeekday = this.workout.getWeekDay();
 
         this.setUpCheckedBoxes();
         this.nameInput.setText(this.workout.getName());
-
+        this.workoutExists = true;
     }
 
     private void setUpCheckedBoxes() {
@@ -71,19 +79,16 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         }
     }
 
-    public void setUpWorkout(){
-        if(getIntent().getStringExtra(GlobalConstants.WORKOUT_ID) == null){
-            setUpNewWorkout();
-        }else {
-            setUpExistingWorkout();
-        }
-    }
 
-
-    public void createWorkout(View view){
+    public void createWorkout(){
         this.workout.setName(nameInput.getText().toString());
         this.workout.setWeekDay(this.workoutWeekday);
-        workoutRegistry.updateDB(this.workout);
+
+        if(workoutExists){
+            registry.updateItem(this.workout);
+        }else {
+            registry.addItem(workout);
+        }
     }
 
     public void onCheckBoxClick(View view){
@@ -143,10 +148,18 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         }
 
     public void addExercises(View view){
-        createWorkout(view);
+        createWorkout();
         Intent intent = new Intent(this, ExerciseSelectorActivity.class);
         intent.putExtra(GlobalConstants.WORKOUT_ID, this.workout.getId());
         startActivity(intent);
+    }
+
+    public void saveAndExit(View view){
+        createWorkout();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(GlobalConstants.EXTRA_VIEW, GlobalConstants.WORKOUT_VIEW);
+        startActivity(intent);
+
     }
 
     @Override

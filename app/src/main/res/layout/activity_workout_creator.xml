@@ -73,12 +73,33 @@
         android:onClick="onCheckBoxClick"
         android:text="@string/sunday" />
 
-    <Button
-        android:text="Add Exercises"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:onClick="addExercises"/>
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/button3"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="saveAndExit"
+                android:text="Save Workout" />
+
+            <Button
+                android:id="@+id/button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="addExercises"
+                android:text="Add Exercises" />
+        </TableRow>
+
+    </TableLayout>
 
 </LinearLayout>

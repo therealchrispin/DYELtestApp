@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.trainingsapp.chrisals.dyel20.Activities.ExerciseDetailActivity;
-import com.trainingsapp.chrisals.dyel20.DataBase.ExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.DBRegistryFacade;
+import com.trainingsapp.chrisals.dyel20.DB.ExerciseRegistry;
 import com.trainingsapp.chrisals.dyel20.core.Exercise;
 import com.trainingsapp.chrisals.dyel20.core.GlobalConstants;
 import com.trainingsapp.chrisals.dyel20.R;
@@ -21,11 +22,11 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseVi
 
     private ExerciseViewHolder viewHolder;
     private Context context;
-    private ExerciseRegistry exerciseRegistry;
+    private DBRegistryFacade registry;
     private Exercise exercise;
 
     public ExerciseRecyclerViewAdapter(Context context) {
-        exerciseRegistry = new ExerciseRegistry(context);
+        registry = DBRegistryFacade.getInstance(context);
         this.context = context;
     }
 
@@ -37,7 +38,7 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseVi
 
 
     public void onBindViewHolder(ExerciseViewHolder viewHolder, final int position){
-        exercise = exerciseRegistry.getAllItems().get(position);
+        exercise = registry.getAllExercises().get(position);
 
         this.viewHolder.exerciseName.setText(exercise.getName());
         this.viewHolder.exerciseSet.setText(String.valueOf(exercise.getSets()));
@@ -49,20 +50,20 @@ public class ExerciseRecyclerViewAdapter extends RecyclerView.Adapter<ExerciseVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ExerciseDetailActivity.class);
-                intent.putExtra(GlobalConstants.EX_ID, exerciseRegistry.getAllItems().get(position).getId());
+                intent.putExtra(GlobalConstants.EX_ID, registry.getAllExercises().get(position).getId());
                 context.startActivity(intent);
             }
         });
     }
 
-    private void removeItem(String id){
-        exerciseRegistry.removeItem(id);
+    private void removeItem(Exercise exercise){
+        registry.removeItem(exercise);
     }
 
 
     @Override
     public int getItemCount() {
-        return exerciseRegistry.getAllItems().size();
+        return registry.getAllExercises().size();
     }
 
 

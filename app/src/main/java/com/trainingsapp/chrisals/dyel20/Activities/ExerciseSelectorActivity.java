@@ -5,9 +5,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.ExerciseRegistry;
-import com.trainingsapp.chrisals.dyel20.DataBase.WorkoutExerciseRegistry;
-import com.trainingsapp.chrisals.dyel20.DataBase.WorkoutRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.DBRegistryFacade;
+import com.trainingsapp.chrisals.dyel20.DB.ExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.WorkoutExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.WorkoutRegistry;
 import com.trainingsapp.chrisals.dyel20.core.GlobalConstants;
 import com.trainingsapp.chrisals.dyel20.R;
 import com.trainingsapp.chrisals.dyel20.core.Workout;
@@ -18,8 +19,7 @@ public class ExerciseSelectorActivity extends FragmentActivity
 
     private String workoutID;
     protected Workout workout;
-    protected ExerciseRegistry registry;
-    protected WorkoutRegistry workoutRegistry;
+    protected DBRegistryFacade registry;
     protected WorkoutExerciseRegistry workoutExerciseRegistry;
     private int exerciseOrder = 1;
 
@@ -31,12 +31,11 @@ public class ExerciseSelectorActivity extends FragmentActivity
 
         if(findViewById(R.id.exercise_title_container) != null){
 
-            this.registry = new ExerciseRegistry(this);
-            this.workoutRegistry = new WorkoutRegistry(this);
+            this.registry = DBRegistryFacade.getInstance(this);
 
             ExerciseTitleListFragment firstFragment = new ExerciseTitleListFragment();
 
-            this.workout = workoutRegistry.getWorkoutById(workoutID);
+            this.workout = registry.getWorkoutByID(workoutID);
 
             firstFragment.setArguments(getIntent().getExtras());
 
@@ -77,7 +76,7 @@ public class ExerciseSelectorActivity extends FragmentActivity
 
     @Override
     public void returnToWorkoutView() {
-        Intent intent = new Intent(this, NavigationDrawerViewActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(GlobalConstants.EXTRA_VIEW, GlobalConstants.WORKOUT_VIEW);
         startActivity(intent);
 

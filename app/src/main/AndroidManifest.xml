@@ -12,17 +12,17 @@
         <activity android:name=".Activities.ExerciseDetailActivity" />
         <activity android:name=".Activities.WorkoutCreatorActivity" />
         <activity android:name=".Activities.ExerciseSelectorActivity" />
+        <activity android:name=".Activities.WorkoutDetailViewActivity" />
+        <activity android:name=".Activities.selectActiveWorkoutAktivity" />
         <activity
-            android:name=".Activities.NavigationDrawerViewActivity"
-            android:label="@string/title_activity_navigation_drawer_view"
+            android:name=".Activities.MainActivity"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.WorkoutDetailViewActivity" />
     </application>
 
 </manifest>

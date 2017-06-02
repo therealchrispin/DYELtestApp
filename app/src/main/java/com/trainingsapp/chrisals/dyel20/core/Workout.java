@@ -1,5 +1,7 @@
 package com.trainingsapp.chrisals.dyel20.core;
 
+import android.support.v7.app.NotificationCompat;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,7 +24,7 @@ public class Workout implements Observer {
 
         this.id = this.getName() + "_" + date;
         this.exercises = new ArrayList<Exercise>();
-        this.active = true;
+        this.active = false;
 
     }
 
@@ -81,6 +83,14 @@ public class Workout implements Observer {
         this.id = id;
     }
 
+    public ArrayList<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(ArrayList<Exercise> exercises){
+        this.exercises = exercises;
+    }
+
     public void update(String weekday) {
         for(WeekDay w: this.weekDays) {
             if (weekday.equals(w)) {
@@ -90,21 +100,10 @@ public class Workout implements Observer {
     }
 
     public String notifyUser() {
-    /*
-        - Change return type
-        - make Android notification
-
-    */
         return "bro do you even lift";
     }
 
-    public ArrayList<Exercise> getExercises() {
-        return exercises;
-    }
 
-    public void setExercises(ArrayList<Exercise> exercises){
-        this.exercises = exercises;
-    }
 
 
 }

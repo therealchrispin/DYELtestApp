@@ -16,6 +16,7 @@ public class ActiveWorkouts implements Observable {
     private String today;
 
     public ActiveWorkouts() {
+        getTodaysDate();
     }
 
 

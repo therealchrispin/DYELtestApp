@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.ExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.DBRegistryFacade;
+import com.trainingsapp.chrisals.dyel20.DB.ExerciseRegistry;
 import com.trainingsapp.chrisals.dyel20.core.Exercise;
 import com.trainingsapp.chrisals.dyel20.core.GlobalConstants;
 import com.trainingsapp.chrisals.dyel20.R;
@@ -31,7 +32,7 @@ public class ExerciseDetailViewFragment extends Fragment {
     private EditText exerciseSets;
     private EditText exerciseReps;
     private EditText exerciseWeight;
-    private ExerciseRegistry exReg;
+    private DBRegistryFacade registry;
 
     onSaveExerciseListener onSaveExerciseListener;
 
@@ -103,9 +104,11 @@ public class ExerciseDetailViewFragment extends Fragment {
             }
 
         });
-        exReg = new ExerciseRegistry(getActivity());
 
-        this.exercise = exReg.getExerciseById(id);
+        this.registry = DBRegistryFacade.getInstance(getActivity());
+
+
+        this.exercise = registry.getExerciseByID(id);
 
         exerciseName = (EditText) getActivity().findViewById(R.id.edit_exercise_name);
         exerciseSets = (EditText) getActivity().findViewById(R.id.edit_exercise_sets);
@@ -129,7 +132,7 @@ public class ExerciseDetailViewFragment extends Fragment {
         this.exercise.setReps(Integer.valueOf(exerciseReps.getText().toString()));
         this.exercise.setWeight(Double.valueOf(exerciseWeight.getText().toString()));
 
-        exReg.updateDBItem(this.exercise);
+        registry.updateItem(this.exercise);
 
 
         addExerciseToWorkout(this.exercise.getId());

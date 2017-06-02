@@ -7,8 +7,15 @@
         android:id="@+id/edit_menu"
         android:icon="@drawable/ic_menu_edit"
         android:title="edit"
-        tools:ignore="AppCompatRessource"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/delete_exericses"
         app:showAsAction="always"
+        android:title="delete"
+        android:icon="@drawable/ic_delete"
+        tools:ignore="AppCompatRessource"
         />
 
 </menu>

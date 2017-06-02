@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.ExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.DBRegistryFacade;
+import com.trainingsapp.chrisals.dyel20.DB.ExerciseRegistry;
 import com.trainingsapp.chrisals.dyel20.core.Exercise;
 import com.trainingsapp.chrisals.dyel20.R;
 
@@ -19,7 +21,8 @@ import java.util.ArrayList;
 
 public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
     private Context context;
-    private ExerciseRegistry exerciseRegistry;
+    private DBRegistryFacade registry;
+    private Exercise exercise;
     private ArrayList<Exercise> exerciseArrayList;
 
     public ExerciseArrayAdapter(Context context, ArrayList<Exercise> exerciseArrayList) {
@@ -34,19 +37,33 @@ public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
         super(context, R.layout.list_group);
 
         this.context = context;
-        this.exerciseRegistry = new ExerciseRegistry(context);
-        this.exerciseArrayList = this.exerciseRegistry.getAllItems();
+        this.registry = DBRegistryFacade.getInstance(context);
+        this.exerciseArrayList = this.registry.getAllExercises();
     }
 
     @Override
     public View getView(int position, View mView, ViewGroup parent){
 
-        Exercise exercise = exerciseArrayList.get(position);
+        this.exercise = exerciseArrayList.get(position);
 
         if(mView == null) {
             mView = LayoutInflater.from(this.context).inflate(R.layout.list_group, parent, false);
         }
         ViewHolder viewHolder = new ViewHolder();
+
+        /*viewHolder.linearLayout = (LinearLayout) mView.findViewById(R.id.list_lin_layout);
+
+        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.isSelected()){
+                    v.setSelected(false);
+                }else {
+                    v.setSelected(true);
+                }
+
+            }
+        });*/
 
         viewHolder.exerciseTitle = (TextView) mView.findViewById(R.id.exercise_title);
         viewHolder.exerciseWeight = (TextView) mView.findViewById(R.id.exercise_weight);
@@ -63,8 +80,12 @@ public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
         return exerciseArrayList.size();
     }
 
+
     private static class ViewHolder{
         TextView exerciseTitle;
         TextView exerciseWeight;
+        LinearLayout linearLayout;
     }
+
+
 }

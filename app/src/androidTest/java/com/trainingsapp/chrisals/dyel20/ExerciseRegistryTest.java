@@ -1,6 +1,6 @@
 package com.trainingsapp.chrisals.dyel20;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.ExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.ExerciseRegistry;
 
 import junit.framework.TestCase;
 

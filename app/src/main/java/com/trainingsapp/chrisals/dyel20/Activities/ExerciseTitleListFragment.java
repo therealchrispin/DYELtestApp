@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.ExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.DBRegistryFacade;
 import com.trainingsapp.chrisals.dyel20.R;
 import com.trainingsapp.chrisals.dyel20.Helper.ExerciseArrayAdapter;
 
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 
 public class ExerciseTitleListFragment extends ListFragment {
-    protected ExerciseRegistry exerciseRegistry;
+    protected DBRegistryFacade registry;
     onExerciseTitleSelectedListener onExerciseTitleSelectedListener;
     private ArrayList<String> exerciseTitles;
 
@@ -28,7 +28,7 @@ public class ExerciseTitleListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         setUpBtn();
 
-        this.exerciseRegistry = new ExerciseRegistry(getActivity());
+        this.registry = DBRegistryFacade.getInstance(getActivity());
 
         ExerciseArrayAdapter arrayAdapter = new ExerciseArrayAdapter(getActivity());
         setListAdapter(arrayAdapter);
@@ -61,7 +61,7 @@ public class ExerciseTitleListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id){
-        String Exid = exerciseRegistry.getAllItems().get(position).getId();
+        String Exid = registry.getAllExercises().get(position).getId();
         onExerciseTitleSelectedListener.onExerciseSelected(Exid, position);
     }
 

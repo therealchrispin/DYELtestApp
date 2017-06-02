@@ -1,4 +1,4 @@
-package com.trainingsapp.chrisals.dyel20.DataBase;
+package com.trainingsapp.chrisals.dyel20.DB;
 
 import android.provider.BaseColumns;
 

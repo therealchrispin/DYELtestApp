@@ -1,11 +1,9 @@
 package com.trainingsapp.chrisals.dyel20.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,30 +14,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.trainingsapp.chrisals.dyel20.Helper.ExerciseRecyclerViewAdapter;
-import com.trainingsapp.chrisals.dyel20.core.GlobalConstants;
 import com.trainingsapp.chrisals.dyel20.R;
-import com.trainingsapp.chrisals.dyel20.Helper.WorkoutRecyclerViewAdapter;
+import com.trainingsapp.chrisals.dyel20.core.GlobalConstants;
 
-public class NavigationDrawerViewActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private RecyclerView recyclerView;
-    private FloatingActionButton fab;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigation_drawer_view);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        recyclerView = (RecyclerView) findViewById(R.id.nav_drawer_recycler);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        RecyclerView.LayoutManager lm = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(lm);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -50,18 +46,18 @@ public class NavigationDrawerViewActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         this.setUpView();
-
     }
 
-
     public void setUpView(){
-        if(getIntent().getStringExtra(GlobalConstants.EXTRA_VIEW) != null){
-            chooseView();
-        }else {
-            this.setRecyclerViewExerciseAdapter();
+        if(findViewById(R.id.main_frame) != null){
+            if(getIntent().getStringExtra(GlobalConstants.EXTRA_VIEW) != null){
+                chooseView();
+            }else {
+                this.setMainViewFragment();
+            };
         }
+
     }
 
     public void chooseView(){
@@ -69,38 +65,56 @@ public class NavigationDrawerViewActivity extends AppCompatActivity
 
         switch (view){
             case GlobalConstants.EXERCISE_VIEW:
-                this.setRecyclerViewExerciseAdapter();
+                this.setAllExercisesFragment();
                 break;
             case GlobalConstants.WORKOUT_VIEW:
-                this.setRecyclerViewWorkoutAdapter();
+                this.setAllWorkoutsFragment();
+                break;
+            case GlobalConstants.MAIN_VIEW:
+                this.setMainViewFragment();
                 break;
             default:
-                this.setRecyclerViewExerciseAdapter();
+                this.setMainViewFragment();
+        }
+    }
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.show_all_exercises_menu) {
+            this.setAllExercisesFragment();
+        } else if (id == R.id.show_all_workouts_menu) {
+            this.setAllWorkoutsFragment();
+        } else if (id == R.id.main_workout){
+            this.setMainViewFragment();
         }
 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
-    public void setRecyclerViewExerciseAdapter(){
-        recyclerView.setAdapter(new ExerciseRecyclerViewAdapter(this));
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               startActivity(new Intent(getApplicationContext(), ExerciseCreatorActivity.class));
-            }
-        });
+    private void setMainViewFragment() {
+        MainViewFragment fragment = new MainViewFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fragment).commit();
     }
 
-    public void setRecyclerViewWorkoutAdapter(){
-        recyclerView.setAdapter(new WorkoutRecyclerViewAdapter(this));
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), WorkoutCreatorActivity.class));
-            }
-        });
+    public void setAllExercisesFragment(){
+        AllExercisesFragment fragment = new AllExercisesFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fragment).commit();
     }
+
+
+    private void setAllWorkoutsFragment(){
+        AllWorkoutsFragment fragment = new AllWorkoutsFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fragment).commit();
+    }
+
+
 
     @Override
     public void onBackPressed() {
@@ -115,7 +129,7 @@ public class NavigationDrawerViewActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navigation_drawer_view, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -133,24 +147,5 @@ public class NavigationDrawerViewActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.show_all_exercises_menu) {
-            this.setRecyclerViewExerciseAdapter();
-        } else if (id == R.id.show_all_workouts_menu) {
-            this.setRecyclerViewWorkoutAdapter();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-
 
 }

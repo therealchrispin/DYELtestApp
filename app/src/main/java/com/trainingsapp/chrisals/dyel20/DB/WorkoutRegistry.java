@@ -1,4 +1,4 @@
-package com.trainingsapp.chrisals.dyel20.DataBase;
+package com.trainingsapp.chrisals.dyel20.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.trainingsapp.chrisals.dyel20.core.ActiveWorkouts;
-import com.trainingsapp.chrisals.dyel20.DataBase.DataBaseContract.WorkoutEntry;
+import com.trainingsapp.chrisals.dyel20.DB.DataBaseContract.WorkoutEntry;
 import com.trainingsapp.chrisals.dyel20.core.Exercise;
 import com.trainingsapp.chrisals.dyel20.core.WeekDay;
 import com.trainingsapp.chrisals.dyel20.core.Workout;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by chris.als on 21.02.17.
  */
 public class WorkoutRegistry extends DataBaseAccessHandler {
-
+    // TODO Remove active Workouts ?
     private ActiveWorkouts activeWorkouts;
     private WorkoutExerciseRegistry workoutExerciseRegistry;
     private SQLiteDatabase db;
@@ -35,27 +35,8 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
         activeWorkouts = new ActiveWorkouts();
     }
 
-    public void updateDB(Workout workout) {
-        if (checkIfWorkoutIsInDB(workout)) {
-            this.updateWorkout(workout);
-        } else {
-            addNewWorkout(workout);
-        }
 
-    }
-
-    private boolean checkIfWorkoutIsInDB(Workout workout) {
-        boolean workoutInDb = false;
-        for (Workout wk : this.getAllItems()) {
-            if (workout.getId().equals(wk.getId())) {
-                workoutInDb = true;
-            }
-        }
-        return workoutInDb;
-    }
-
-
-    private void addNewWorkout(Workout workout) {
+    public void addNewWorkout(Workout workout) {
         this.activeWorkouts.registerObserver(workout);
         this.addWorkoutToDB(workout);
     }
@@ -132,6 +113,10 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
         return workoutExerciseRegistry.getExerciseListByWorkoutId(id);
     }
 
+    private void removeExerciseFromWorkout(Exercise exercise){
+
+    }
+
 
     private ArrayList<WeekDay> stringToWeekdayArrayList(String weekString) {
         String[] stringweek = weekString.split(",");
@@ -154,9 +139,9 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
         return weekdays;
     }
 
-    public void removeItem(int position) {
+    public void removeItem(Workout workout) {
         String selection = WorkoutEntry._ID + " LIKE ?";
-        String[] selectionArgs = {String.valueOf(getAllItems().get(position).getId())};
+        String[] selectionArgs = {workout.getId()};
         db.delete(WorkoutEntry.TABLE_NAME, selection, selectionArgs);
     }
 

@@ -1,12 +1,13 @@
-package com.trainingsapp.chrisals.dyel20.DataBase;
+package com.trainingsapp.chrisals.dyel20.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.DataBaseContract.*;
+import com.trainingsapp.chrisals.dyel20.DB.DataBaseContract.*;
 import com.trainingsapp.chrisals.dyel20.core.Exercise;
+import com.trainingsapp.chrisals.dyel20.core.Workout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,6 +56,16 @@ public class WorkoutExerciseRegistry {
 
         long row = db.insert(ExerciseWorkoutEntry.TABLE_NAME, null, values);
     }
+
+
+    public void removeRow(Workout workout, Exercise exercise){
+            String selection = WorkoutEntry._ID + " LIKE ? AND " + ExerciseEntry._ID + " LIKE ?" ;
+
+            String[] selectionArgs = {workout.getId(), exercise.getId()};
+
+            db.delete(ExerciseWorkoutEntry.TABLE_NAME, selection, selectionArgs);
+    }
+
 
     private Cursor getCursorByWorkoutId(String workoutId){
         String selection = ExerciseWorkoutEntry.WORKOUT_ID + " LIKE ?";

@@ -49,8 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:inputType="numberDecimal" />
         </TableRow>
 
         <TableRow
@@ -73,8 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:inputType="numberDecimal" />
         </TableRow>
 
         <TableRow
@@ -97,8 +95,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:inputType="numberDecimal"
+                 />
 
         </TableRow>
 
@@ -113,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Save" />
+
         </TableRow>
     </TableLayout>
 

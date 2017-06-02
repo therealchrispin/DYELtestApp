@@ -8,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.trainingsapp.chrisals.dyel20.Activities.WorkoutDetailViewActivity;
-import com.trainingsapp.chrisals.dyel20.DataBase.WorkoutExerciseRegistry;
-import com.trainingsapp.chrisals.dyel20.DataBase.WorkoutRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.DBRegistryFacade;
+import com.trainingsapp.chrisals.dyel20.DB.WorkoutExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.WorkoutRegistry;
 import com.trainingsapp.chrisals.dyel20.core.GlobalConstants;
 import com.trainingsapp.chrisals.dyel20.R;
 import com.trainingsapp.chrisals.dyel20.core.WeekDay;
@@ -24,12 +25,10 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
 
     private WorkoutViewHolder viewHolder;
     private Context context;
-    private WorkoutRegistry workoutRegistry;
-    private WorkoutExerciseRegistry workoutExerciseRegistry;
+    private DBRegistryFacade registry;
 
     public WorkoutRecyclerViewAdapter(Context context) {
-        workoutRegistry = new WorkoutRegistry(context);
-        workoutExerciseRegistry = new WorkoutExerciseRegistry(context);
+        registry = DBRegistryFacade.getInstance(context);
         this.context = context;
     }
 
@@ -43,14 +42,14 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
 
     @Override
     public void onBindViewHolder(WorkoutViewHolder holder,final int position) {
-        this.setUpWorkoutRow(workoutRegistry.getAllItems().get(position));
+        this.setUpWorkoutRow(registry.getAllWorkouts().get(position));
 
 
         this.viewHolder.detailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, WorkoutDetailViewActivity.class);
-                intent.putExtra(GlobalConstants.WORKOUT_ID, workoutRegistry.getAllItems().get(position).getId());
+                intent.putExtra(GlobalConstants.WORKOUT_ID, registry.getAllWorkouts().get(position).getId());
                 context.startActivity(intent);
             }
         });
@@ -61,7 +60,9 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
     public void setUpWorkoutRow(Workout workout){
 
         this.viewHolder.workoutName.setText(workout.getName());
-        this.viewHolder.weekdays.setText(this.buildString(workout.getWeekDay()));
+
+        // TODO refactor String creation !
+        this.viewHolder.weekdays.setText("FUNC TEST");
     }
 
     public String buildString(ArrayList<WeekDay> weekDays){
@@ -81,7 +82,7 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
 
     @Override
     public int getItemCount() {
-        return workoutRegistry.getAllItems().size();
+        return registry.getAllWorkouts().size();
     }
 }
 

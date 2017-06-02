@@ -1,20 +1,20 @@
 package com.trainingsapp.chrisals.dyel20.Activities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.ExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.DBRegistryFacade;
+import com.trainingsapp.chrisals.dyel20.DB.ExerciseRegistry;
 import com.trainingsapp.chrisals.dyel20.core.Exercise;
 import com.trainingsapp.chrisals.dyel20.core.GlobalConstants;
 import com.trainingsapp.chrisals.dyel20.R;
 
 public class ExerciseDetailActivity extends AppCompatActivity {
     private Exercise exercise;
-    private ExerciseRegistry exerciseRegistry;
+    private DBRegistryFacade registry;
     private EditText exerciseName;
     private EditText exerciseSets;
     private EditText exerciseReps;
@@ -35,8 +35,9 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             }
         });
 
-        this.exerciseRegistry = new ExerciseRegistry(this);
-        this.exercise = exerciseRegistry.getExerciseById( getIntent().getStringExtra(GlobalConstants.EX_ID));
+        this.registry = DBRegistryFacade.getInstance(this);
+
+        this.exercise = registry.getExerciseByID( getIntent().getStringExtra(GlobalConstants.EX_ID));
 
         this.setUpView();
 
@@ -63,11 +64,9 @@ public class ExerciseDetailActivity extends AppCompatActivity {
         this.exercise.setReps(Integer.valueOf(exerciseReps.getText().toString()));
         this.exercise.setWeight(Double.valueOf(exerciseWeight.getText().toString()));
 
-        exerciseRegistry.updateDBItem(this.exercise);
+        registry.updateItem(this.exercise);
 
-
-        Intent intent = new Intent(this,NavigationDrawerViewActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     public void onPause(){

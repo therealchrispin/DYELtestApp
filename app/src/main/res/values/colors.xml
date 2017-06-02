@@ -3,4 +3,6 @@
     <color name="colorPrimary">#212121</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#2962ff</color>
+    <color name="pressed_color">#646463</color>
+    <color name="defaul_list_item_color">#ffffff</color>
 </resources>

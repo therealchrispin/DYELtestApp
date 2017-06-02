@@ -1,11 +1,11 @@
-package com.trainingsapp.chrisals.dyel20.DataBase;
+package com.trainingsapp.chrisals.dyel20.DB;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.DataBaseContract.*;
+import com.trainingsapp.chrisals.dyel20.DB.DataBaseContract.*;
 import com.trainingsapp.chrisals.dyel20.core.Exercise;
 import com.trainingsapp.chrisals.dyel20.core.ExerciseNames;
 
@@ -59,12 +59,12 @@ public class ExerciseRegistry extends DataBaseAccessHandler {
         db.update(ExerciseEntry.TABLE_NAME, values, selection, selectionsArgs);
     }
 
-    public void removeItem(String id){
+    public void removeItem(Exercise exercise){
         String selection = ExerciseEntry._ID + " LIKE ?";
         String exId = "";
 
         for(Exercise ex: getAllItems()){
-            if(ex.getId().equals(id)) {
+            if(ex.getId().equals(exercise.getId())) {
                     exId = ex.getId();
                 }
             }

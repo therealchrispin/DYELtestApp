@@ -1,9 +1,9 @@
-package com.trainingsapp.chrisals.dyel20.DataBase;
+package com.trainingsapp.chrisals.dyel20.DB;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.trainingsapp.chrisals.dyel20.DataBase.DataBaseContract.*;
+import com.trainingsapp.chrisals.dyel20.DB.DataBaseContract.*;
 
 
 /**

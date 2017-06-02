@@ -1,10 +1,10 @@
-package com.trainingsapp.chrisals.dyel20.DataBase;
+package com.trainingsapp.chrisals.dyel20.DB;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.DataBaseContract.*;
+import com.trainingsapp.chrisals.dyel20.DB.DataBaseContract.*;
 import java.util.ArrayList;
 
 /**

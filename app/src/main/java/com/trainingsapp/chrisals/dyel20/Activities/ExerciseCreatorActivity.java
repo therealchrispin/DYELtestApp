@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.ExerciseRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.DBRegistryFacade;
+import com.trainingsapp.chrisals.dyel20.DB.ExerciseRegistry;
 import com.trainingsapp.chrisals.dyel20.core.Exercise;
 import com.trainingsapp.chrisals.dyel20.R;
+import com.trainingsapp.chrisals.dyel20.core.GlobalConstants;
 
 public class ExerciseCreatorActivity extends AppCompatActivity {
-    private ExerciseRegistry exerciseRegistry;
+    private DBRegistryFacade registry;
     private String exerciseName;
     private String exerciseReps;
     private String exerciseSets;
@@ -23,7 +25,7 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_creator);
 
-        this.exerciseRegistry = new ExerciseRegistry(this);
+        this.registry = DBRegistryFacade.getInstance(this);
     }
 
 
@@ -36,9 +38,10 @@ public class ExerciseCreatorActivity extends AppCompatActivity {
                                             Integer.valueOf(this.exerciseReps),
                                             Double.valueOf(this.exerciseWeight));
 
-        exerciseRegistry.addExercise(exercise);
+        registry.addItem(exercise);
 
-        Intent intent = new Intent(this, NavigationDrawerViewActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(GlobalConstants.EXTRA_VIEW, GlobalConstants.EXERCISE_VIEW);
         startActivity(intent);
     }
 

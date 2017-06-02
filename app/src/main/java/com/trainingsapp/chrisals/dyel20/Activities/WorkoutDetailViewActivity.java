@@ -1,6 +1,7 @@
 package com.trainingsapp.chrisals.dyel20.Activities;
 
-import com.trainingsapp.chrisals.dyel20.DataBase.WorkoutRegistry;
+import com.trainingsapp.chrisals.dyel20.DB.DBRegistryFacade;
+import com.trainingsapp.chrisals.dyel20.DB.WorkoutRegistry;
 import com.trainingsapp.chrisals.dyel20.core.Exercise;
 import com.trainingsapp.chrisals.dyel20.Helper.ExerciseArrayAdapter;
 import com.trainingsapp.chrisals.dyel20.core.GlobalConstants;
@@ -13,20 +14,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class WorkoutDetailViewActivity extends AppCompatActivity {
+
+public class WorkoutDetailViewActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private Workout workout;
     private Exercise[] exerciseList;
     private TouchInterceptor interceptorList;
     private FloatingActionButton fab;
     private ExerciseArrayAdapter arrayAdapter;
+    private ListView listView;
     private DropListener dropListener = new DropListener() {
         @Override
         public void drop(int from, int to) {
@@ -60,27 +66,33 @@ public class WorkoutDetailViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_detail);
 
-
-
-        WorkoutRegistry workoutRegistry = new WorkoutRegistry(this);
-
-        this.fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        this.workout = workoutRegistry.getWorkoutById(getIntent().getStringExtra(GlobalConstants.WORKOUT_ID));
-
         this.setUpView();
 
-        ListView listView = (ListView) findViewById(R.id.touchinterceptor);
+    }
 
-        interceptorList = (TouchInterceptor) listView;
-        interceptorList.setDropListener(dropListener);
+    @Override
+    protected void onRestart() {
+        super.onRestart();
 
-        this.arrayAdapter = new ExerciseArrayAdapter(this, this.workout.getExercises());
-        listView.setAdapter(arrayAdapter);
+        this.setUpView();
     }
 
 
+
     public void setUpView(){
+        //interceptorList = (TouchInterceptor) listView;
+        //interceptorList.setDropListener(dropListener);
+
+
+        DBRegistryFacade registry = DBRegistryFacade.getInstance(this);
+        this.workout = registry.getWorkoutByID(getIntent().getStringExtra(GlobalConstants.WORKOUT_ID));
+
+        this.fab = (FloatingActionButton) findViewById(R.id.fab);
+
+
+        listView = (ListView) findViewById(R.id.touchinterceptor);
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +100,11 @@ public class WorkoutDetailViewActivity extends AppCompatActivity {
             }
         });
 
+        this.arrayAdapter = new ExerciseArrayAdapter(this, this.workout.getExercises());
+        //listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(this);
 
         TextView workoutName = (TextView) findViewById(R.id.workout_name);
         workoutName.setText(this.workout.getName());
@@ -122,15 +139,32 @@ public class WorkoutDetailViewActivity extends AppCompatActivity {
                 intent.putExtra(GlobalConstants.WORKOUT_ID, this.workout.getId());
                 startActivity(intent);
                 return true;
+
+            case R.id.delete_exericses:
+                this.deleteExercisesFromWorkout();
+                return true;
+
             default:
                 return true;
         }
+    }
+
+    private void deleteExercisesFromWorkout() {
+
     }
 
 
     public void addExercises(View view) {
         Intent intent = new Intent(this, ExerciseSelectorActivity.class);
         intent.putExtra(GlobalConstants.WORKOUT_ID, this.workout.getId());
+        startActivity(intent);
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, ExerciseDetailActivity.class);
+        intent.putExtra(GlobalConstants.EX_ID, this.workout.getExercises().get(position).getId());
         startActivity(intent);
     }
 }
