@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">DYEL 2.0</string>
-    <string name="title_activity_workout_creator">WorkoutCreatorActivity</string>
-    <string name="title_activity_exercise_registry_view">ExerciseRegistryViewActivity</string>
+
+    <string name="title_activity_workout_creator">Create Workout</string>
+    <string name="title_activity_exercise_registry_view">All Exercises</string>
     <string name="name">Name</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
@@ -10,6 +11,8 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+
+    <string name="active_workout">acitve workout</string>
 
     <string name="title_activity_main_viewer">MainViewerActivity</string>
     <string name="drawer_open">Open navigation drawer</string>
@@ -23,10 +26,10 @@
     <string name="weight">Weight</string>
     <string name="sets">Sets</string>
     <string name="reps">Reps</string>
-    <string name="title_activity_workout_detail">workoutDetail</string>
-    <string name="title_activity_workout_editor">WorkoutEditorActivity</string>
-    <string name="title_activity_main_workout">MainWorkoutActivity</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_workout_detail">Workout Detail</string>
+    <string name="title_activity_workout_editor">Edit Workout</string>
+    <string name="title_activity_main_workout">Active Workout</string>
+    <string name="title_activity_main">Main Workout</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -65,10 +65,14 @@ public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
             }
         });*/
 
-        viewHolder.exerciseTitle = (TextView) mView.findViewById(R.id.exercise_title);
-        viewHolder.exerciseWeight = (TextView) mView.findViewById(R.id.exercise_weight);
+        viewHolder.exerciseTitle = (TextView) mView.findViewById(R.id.ex_title);
+        viewHolder.exerciseWeight = (TextView) mView.findViewById(R.id.ex_weight);
+        viewHolder.exerciseReps = (TextView) mView.findViewById(R.id.ex_reps);
+        viewHolder.exerciseSets = (TextView) mView.findViewById(R.id.ex_set);
 
         viewHolder.exerciseTitle.setText(exercise.getName());
+        viewHolder.exerciseSets.setText(String.valueOf(exercise.getSets()));
+        viewHolder.exerciseReps.setText(String.valueOf(exercise.getReps()));
         viewHolder.exerciseWeight.setText(String.valueOf(exercise.getWeight()));
 
         return mView;
@@ -84,7 +88,8 @@ public class ExerciseArrayAdapter extends ArrayAdapter<Exercise> {
     private static class ViewHolder{
         TextView exerciseTitle;
         TextView exerciseWeight;
-        LinearLayout linearLayout;
+        TextView exerciseReps;
+        TextView exerciseSets;
     }
 
 

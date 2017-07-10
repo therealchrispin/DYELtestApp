@@ -49,9 +49,9 @@ public class ExerciseSelectorActivity extends FragmentActivity
 
         Bundle args = new Bundle();
 
-        args.putInt(exerciseDetailViewFragment.EXERCISE_POSITION, position);
-        args.putString(exerciseDetailViewFragment.EXERCISE_ID, id);
-        args.putString(exerciseDetailViewFragment.WORKOUT_ID, this.workoutID);
+        args.putInt(ExerciseDetailViewFragment.EXERCISE_POSITION, position);
+        args.putString(ExerciseDetailViewFragment.EXERCISE_ID, id);
+        args.putString(ExerciseDetailViewFragment.WORKOUT_ID, this.workoutID);
 
         exerciseDetailViewFragment.setArguments(args);
 

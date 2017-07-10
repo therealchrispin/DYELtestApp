@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 
 import com.trainingsapp.chrisals.dyel20.DB.DBRegistryFacade;
 import com.trainingsapp.chrisals.dyel20.DB.WorkoutRegistry;
@@ -19,10 +20,11 @@ import java.util.ArrayList;
 
 public class WorkoutCreatorActivity extends AppCompatActivity {
     private ArrayList<WeekDay> workoutWeekday;
-    public Workout workout;
+    private Workout workout;
     private EditText nameInput;
     protected DBRegistryFacade registry;
     private boolean workoutExists = false;
+    private RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,9 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
 
         this.registry = DBRegistryFacade.getInstance(this);
         this.nameInput = (EditText) findViewById(R.id.workout_name_input);
+        this.radioButton = (RadioButton) findViewById(R.id.activeworkoutRB);
 
         this.setUpWorkout();
-
     }
 
     public void setUpWorkout(){
@@ -53,6 +55,7 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
     public void setUpExistingWorkout(){
         this.workout = registry.getWorkoutByID(getIntent().getStringExtra(GlobalConstants.WORKOUT_ID));
         this.workoutWeekday = this.workout.getWeekDay();
+
 
         this.setUpCheckedBoxes();
         this.nameInput.setText(this.workout.getName());
@@ -84,12 +87,18 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         this.workout.setName(nameInput.getText().toString());
         this.workout.setWeekDay(this.workoutWeekday);
 
+
         if(workoutExists){
             registry.updateItem(this.workout);
         }else {
             registry.addItem(workout);
         }
+
+        if(radioButton.isChecked()){
+            registry.changeWorkoutStatus(this.workout);
+        }
     }
+
 
     public void onCheckBoxClick(View view){
         boolean checked = ((CheckBox)view).isChecked();
@@ -159,7 +168,6 @@ public class WorkoutCreatorActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(GlobalConstants.EXTRA_VIEW, GlobalConstants.WORKOUT_VIEW);
         startActivity(intent);
-
     }
 
     @Override

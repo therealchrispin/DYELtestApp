@@ -77,8 +77,6 @@ public class WorkoutDetailViewActivity extends AppCompatActivity implements Adap
         this.setUpView();
     }
 
-
-
     public void setUpView(){
         //interceptorList = (TouchInterceptor) listView;
         //interceptorList.setDropListener(dropListener);
@@ -86,12 +84,12 @@ public class WorkoutDetailViewActivity extends AppCompatActivity implements Adap
 
         DBRegistryFacade registry = DBRegistryFacade.getInstance(this);
         this.workout = registry.getWorkoutByID(getIntent().getStringExtra(GlobalConstants.WORKOUT_ID));
+        this.workout.setExercises(registry.getExercisesByWorkoutID(workout));
 
         this.fab = (FloatingActionButton) findViewById(R.id.fab);
 
 
         listView = (ListView) findViewById(R.id.touchinterceptor);
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

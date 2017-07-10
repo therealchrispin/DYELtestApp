@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.trainingsapp.chrisals.dyel20.core.ActiveWorkouts;
 import com.trainingsapp.chrisals.dyel20.DB.DataBaseContract.WorkoutEntry;
 import com.trainingsapp.chrisals.dyel20.core.Exercise;
 import com.trainingsapp.chrisals.dyel20.core.WeekDay;
@@ -17,8 +16,7 @@ import java.util.ArrayList;
  * Created by chris.als on 21.02.17.
  */
 public class WorkoutRegistry extends DataBaseAccessHandler {
-    // TODO Remove active Workouts ?
-    private ActiveWorkouts activeWorkouts;
+    // TODO Remove active Workouts ?om
     private WorkoutExerciseRegistry workoutExerciseRegistry;
     private SQLiteDatabase db;
     private String[] projection = {
@@ -32,12 +30,10 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
         DataBase dataBase = new DataBase(context);
         this.db = dataBase.getWritableDatabase();
         this.workoutExerciseRegistry = new WorkoutExerciseRegistry(context);
-        activeWorkouts = new ActiveWorkouts();
     }
 
 
     public void addNewWorkout(Workout workout) {
-        this.activeWorkouts.registerObserver(workout);
         this.addWorkoutToDB(workout);
     }
 
@@ -102,7 +98,8 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
                     this.stringToWeekdayArrayList(ws));
 
             wo.setId(cursor.getString(cursor.getColumnIndexOrThrow(WorkoutEntry._ID)));
-            wo.setExercises(getExerciseListFromWorkoutId(wo.getId()));
+            wo.setActive(cursor.getInt(cursor.getColumnIndexOrThrow(WorkoutEntry.COLUMN_ACTIVE)) != 0);
+
             workouts.add(wo);
 
         }

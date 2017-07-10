@@ -37,8 +37,8 @@ public class ExerciseDetailViewFragment extends Fragment {
     onSaveExerciseListener onSaveExerciseListener;
 
     public interface onSaveExerciseListener {
-        public void addExerciseToWorkoutList(String id);
-        public void setWorkoutId(String workoutId);
+        void addExerciseToWorkoutList(String id);
+        void setWorkoutId(String workoutId);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class DBRegistryFacade {
         this.startRegistries();
     }
 
-    synchronized public static DBRegistryFacade getInstance(Context context) {
+    public static synchronized DBRegistryFacade getInstance(Context context) {
         if(instance == null){
             instance = new DBRegistryFacade(context);
         }
@@ -35,41 +35,11 @@ public class DBRegistryFacade {
     }
 
     private void startRegistries(){
-        startExerciseRegistry();
-        startWorkoutRegistry();
-        startExWoRegistry();
+        exerciseRegistry = new ExerciseRegistry(context);
+        workoutRegistry = new WorkoutRegistry(context);
+        workExRegistry = new WorkoutExerciseRegistry(context);
     }
 
-    private void startExerciseRegistry(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                exerciseRegistry = new ExerciseRegistry(context);
-            }
-        });
-
-        thread.start();
-    }
-
-    private void startWorkoutRegistry(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                workoutRegistry = new WorkoutRegistry(context);
-            }
-        });
-        thread.start();
-    }
-
-    private void startExWoRegistry(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                workExRegistry = new WorkoutExerciseRegistry(context);
-            }
-        });
-        thread.start();
-    }
 
 
 
@@ -118,17 +88,8 @@ public class DBRegistryFacade {
         return this.workoutRegistry.getAllItems();
     }
 
-    public Workout getActiveWorkout(){
-        Workout workout = null;
-        for(Workout wo: this.getAllWorkouts()){
-            if(wo.isActive()){
-                workout = wo;
-            }
-        }
-        return workout;
-    }
 
-    public void setWorkoutActive(Workout workout){
+    public void changeWorkoutStatus(Workout workout ){
         workout.setActive(true);
         this.updateItem(workout);
 
@@ -138,5 +99,10 @@ public class DBRegistryFacade {
                 this.updateItem(wo);
             }
         }
+    }
+
+
+    public ArrayList<Exercise> getExercisesByWorkoutID(Workout workout){
+        return this.workExRegistry.getExerciseListByWorkoutId(workout.getId());
     }
 }

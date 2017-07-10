@@ -9,10 +9,9 @@ import java.util.Date;
 /**
  * Created by chris.als on 07.02.17.
  */
-public class Workout implements Observer {
+public class Workout {
+
     private String id;
-
-
     private ArrayList<Exercise> exercises;
     private String name;
     private ArrayList<WeekDay> weekDays;
@@ -24,7 +23,6 @@ public class Workout implements Observer {
 
         this.id = this.getName() + "_" + date;
         this.exercises = new ArrayList<Exercise>();
-        this.active = false;
 
     }
 
@@ -35,7 +33,6 @@ public class Workout implements Observer {
         this.name = name;
         this.weekDays = weekdays;
         this.exercises = new ArrayList<Exercise>();
-        this.active = true;
 
         this.id = this.getName() + "_" + date;
     }
@@ -90,19 +87,6 @@ public class Workout implements Observer {
     public void setExercises(ArrayList<Exercise> exercises){
         this.exercises = exercises;
     }
-
-    public void update(String weekday) {
-        for(WeekDay w: this.weekDays) {
-            if (weekday.equals(w)) {
-                notifyUser();
-            }
-        }
-    }
-
-    public String notifyUser() {
-        return "bro do you even lift";
-    }
-
 
 
 

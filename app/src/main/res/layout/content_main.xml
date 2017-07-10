@@ -9,9 +9,11 @@
     tools:showIn="@layout/app_bar_main">
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
-        android:id="@+id/main_frame">
+        android:id="@+id/main_frame"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
 
     </FrameLayout>
 

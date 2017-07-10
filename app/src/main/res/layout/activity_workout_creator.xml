@@ -12,58 +12,82 @@
     tools:context="com.trainingsapp.chrisals.dyel20.Activities.WorkoutCreatorActivity">
 
     <TextView
-        android:textColor="#000000"
-        android:textSize="24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/name"/>
+        android:text="@string/name"
+        android:textColor="@color/primaryText"
+        android:textSize="24dp" />
 
     <EditText
+        android:id="@+id/workout_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/workout_name_input"/>
+        android:layout_marginBottom="8dp"
+        android:paddingBottom="8dp" />
+
+    <RadioButton
+        android:id="@+id/activeworkoutRB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/active_workout"
+        android:textColor="@color/primaryText" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16sp"
+        android:text="Weekdays"
+        android:textColor="#000000"
+        android:textSize="20sp" />
 
     <CheckBox
-        android:text="@string/monday"
+        android:id="@+id/checkbox_monday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkbox_monday"
-        android:onClick="onCheckBoxClick"/>
+        android:onClick="onCheckBoxClick"
+        android:text="@string/monday"
+        android:textColor="@color/primaryText" />
 
     <CheckBox
         android:id="@+id/checkbox_tuesday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onCheckBoxClick"
-        android:text="@string/tuesday" />
+        android:text="@string/tuesday"
+        android:textColor="@color/primaryText" />
 
     <CheckBox
-        android:text="@string/wednesday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/checkbox_wednesday"
-        android:onClick="onCheckBoxClick"/>
-
-    <CheckBox
-        android:text="Thursday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onCheckBoxClick"
+        android:text="@string/wednesday"
+        android:textColor="@color/primaryText" />
+
+    <CheckBox
         android:id="@+id/checkbox_thursday"
-        android:onClick="onCheckBoxClick"/>
-
-    <CheckBox
-        android:text="@string/friday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onCheckBoxClick"
+        android:text="Thursday"
+        android:textColor="@color/primaryText" />
+
+    <CheckBox
         android:id="@+id/checkbox_friday"
-        android:onClick="onCheckBoxClick"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onCheckBoxClick"
+        android:text="@string/friday"
+        android:textColor="@color/primaryText" />
 
     <CheckBox
         android:id="@+id/checkbox_saturday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onCheckBoxClick"
-        android:text="@string/saturday" />
+        android:text="@string/saturday"
+        android:textColor="@color/primaryText" />
 
     <CheckBox
         android:id="@+id/checkbox_sunday"
@@ -71,7 +95,8 @@
         android:layout_height="wrap_content"
         android:checked="false"
         android:onClick="onCheckBoxClick"
-        android:text="@string/sunday" />
+        android:text="@string/sunday"
+        android:textColor="@color/primaryText" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -79,7 +104,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/button3"

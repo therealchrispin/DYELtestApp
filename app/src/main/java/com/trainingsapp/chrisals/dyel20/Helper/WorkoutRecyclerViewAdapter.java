@@ -44,7 +44,6 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
     public void onBindViewHolder(WorkoutViewHolder holder,final int position) {
         this.setUpWorkoutRow(registry.getAllWorkouts().get(position));
 
-
         this.viewHolder.detailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +52,6 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
                 context.startActivity(intent);
             }
         });
-
     }
 
 
@@ -62,7 +60,7 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
         this.viewHolder.workoutName.setText(workout.getName());
 
         // TODO refactor String creation !
-        this.viewHolder.weekdays.setText("FUNC TEST");
+        this.viewHolder.weekdays.setText(this.buildString(workout.getWeekDay()));
     }
 
     public String buildString(ArrayList<WeekDay> weekDays){
@@ -75,7 +73,6 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutView
                 weekdayString = weekdayString + String.valueOf(weekDays.get(i));
             }
         }
-
         return weekdayString;
     }
 
