@@ -41,14 +41,14 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
         long row = db.insert(WorkoutEntry.TABLE_NAME,
                 null,
                 this.getValues(workout.getName(),
-                        arrayListToString(workout.getWeekDay()),
+                        workout.getWeekString(),
                         workout.isActive(),
                         workout.getId()));
     }
 
     public void updateWorkout(Workout workout) {
         ContentValues contentValues = this.getValues(workout.getName(),
-                arrayListToString(workout.getWeekDay()),
+                workout.getWeekString(),
                 workout.isActive(),
                 workout.getId());
         String selection = WorkoutEntry._ID + " LIKE ?";
@@ -69,16 +69,6 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
         return workout;
     }
 
-
-    public ArrayList<Workout> getAllActiveWorkouts() {
-        ArrayList<Workout> activeWorkouts = new ArrayList<Workout>();
-        for (Workout w : this.getAllItems()) {
-            if (w.isActive()) {
-                activeWorkouts.add(w);
-            }
-        }
-        return activeWorkouts;
-    }
 
     @Override
     public Cursor getCursor() {
@@ -106,12 +96,9 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
         return workouts;
     }
 
-    private ArrayList<Exercise> getExerciseListFromWorkoutId(String id) {
-        return workoutExerciseRegistry.getExerciseListByWorkoutId(id);
-    }
-
+    // TODO remove Exercise from Workout
     private void removeExerciseFromWorkout(Exercise exercise){
-
+        /////////
     }
 
 
@@ -120,8 +107,10 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
 
         ArrayList<WeekDay> week = new ArrayList<>();
 
-        for (int i = 0; i < stringweek.length; i++) {
-            week.add(WeekDay.valueOf(stringweek[i]));
+        if(!stringweek[0].equals("")){
+            for (int i = 0; i < stringweek.length; i++) {
+                week.add(WeekDay.valueOf(stringweek[i]));
+            }
         }
 
         return week;

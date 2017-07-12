@@ -59,7 +59,7 @@ public class WorkoutExerciseRegistry {
 
 
     public void removeRow(Workout workout, Exercise exercise){
-            String selection = WorkoutEntry._ID + " LIKE ? AND " + ExerciseEntry._ID + " LIKE ?" ;
+            String selection = ExerciseWorkoutEntry.WORKOUT_ID + " LIKE ? AND " + ExerciseWorkoutEntry.EXERCISE_ID + " LIKE ?" ;
 
             String[] selectionArgs = {workout.getId(), exercise.getId()};
 

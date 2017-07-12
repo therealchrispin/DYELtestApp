@@ -1,8 +1,6 @@
 package com.trainingsapp.chrisals.dyel20.DB;
 
 import android.content.Context;
-import android.provider.SyncStateContract;
-
 import com.trainingsapp.chrisals.dyel20.core.Exercise;
 import com.trainingsapp.chrisals.dyel20.core.Workout;
 
@@ -13,9 +11,8 @@ import java.util.ArrayList;
  */
 
 public class DBRegistryFacade {
+
     private static DBRegistryFacade instance = null;
-
-
     private Context context;
     private ExerciseRegistry exerciseRegistry;
     private WorkoutRegistry workoutRegistry;
@@ -39,10 +36,6 @@ public class DBRegistryFacade {
         workoutRegistry = new WorkoutRegistry(context);
         workExRegistry = new WorkoutExerciseRegistry(context);
     }
-
-
-
-
 
     public void addItem(Exercise exercise){
         this.exerciseRegistry.addExercise(exercise);
@@ -88,7 +81,6 @@ public class DBRegistryFacade {
         return this.workoutRegistry.getAllItems();
     }
 
-
     public void changeWorkoutStatus(Workout workout ){
         workout.setActive(true);
         this.updateItem(workout);
@@ -100,7 +92,6 @@ public class DBRegistryFacade {
             }
         }
     }
-
 
     public ArrayList<Exercise> getExercisesByWorkoutID(Workout workout){
         return this.workExRegistry.getExerciseListByWorkoutId(workout.getId());

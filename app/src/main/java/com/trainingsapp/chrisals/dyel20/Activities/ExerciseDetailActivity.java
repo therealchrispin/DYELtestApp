@@ -1,7 +1,11 @@
 package com.trainingsapp.chrisals.dyel20.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,6 +75,33 @@ public class ExerciseDetailActivity extends AppCompatActivity {
 
     public void onPause(){
         super.onPause();
+        finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.delete_exercis_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.delete_exercise:
+                this.deleteExercise();
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    public void deleteExercise(){
+        registry.removeItem(exercise);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(GlobalConstants.EXTRA_VIEW, GlobalConstants.EXERCISE_VIEW);
+        startActivity(intent);
         finish();
     }
 }

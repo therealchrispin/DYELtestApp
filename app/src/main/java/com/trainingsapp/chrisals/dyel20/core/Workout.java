@@ -88,6 +88,17 @@ public class Workout {
         this.exercises = exercises;
     }
 
+    public String getWeekString(){
+        String weekdayString = "";
 
+        for (int i=0;i<weekDays.size();i++){
+            if(i!=weekDays.size()-1){
+                weekdayString = weekdayString + String.valueOf(weekDays.get(i)) + ",";
+            }else {
+                weekdayString = weekdayString + String.valueOf(weekDays.get(i));
+            }
+        }
+        return weekdayString;
+    }
 
 }

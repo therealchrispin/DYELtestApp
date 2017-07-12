@@ -13,15 +13,16 @@ import com.trainingsapp.chrisals.dyel20.R;
 public class WorkoutViewHolder extends RecyclerView.ViewHolder{
     public TextView workoutName;
     public TextView weekdays;
-    public Button detailButton;
-
+    public Button detailBtn;
+    public Button deleteWorkoutBtn;
     public View workoutView;
 
     public WorkoutViewHolder(View itemView) {
         super(itemView);
 
         this.workoutView = itemView;
-        this.detailButton = (Button) workoutView.findViewById(R.id.workout_card_button);
+        this.detailBtn = (Button) workoutView.findViewById(R.id.workout_card_button);
+        this.deleteWorkoutBtn =(Button) workoutView.findViewById(R.id.delete_workout);
         this.workoutName = (TextView) workoutView.findViewById(R.id.workout_name);
         this.weekdays = (TextView) workoutView.findViewById(R.id.workout_weekdays);
     }

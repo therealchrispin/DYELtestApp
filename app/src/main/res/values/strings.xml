@@ -26,6 +26,10 @@
     <string name="weight">Weight</string>
     <string name="sets">Sets</string>
     <string name="reps">Reps</string>
+
+
+    <string name="delete">delete</string>
+    <string name="save">save</string>
     <string name="title_activity_workout_detail">Workout Detail</string>
     <string name="title_activity_workout_editor">Edit Workout</string>
     <string name="title_activity_main_workout">Active Workout</string>

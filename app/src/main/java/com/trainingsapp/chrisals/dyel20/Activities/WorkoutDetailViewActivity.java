@@ -26,7 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class WorkoutDetailViewActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class WorkoutDetailViewActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+
     private Workout workout;
     private Exercise[] exerciseList;
     private TouchInterceptor interceptorList;
@@ -103,6 +104,7 @@ public class WorkoutDetailViewActivity extends AppCompatActivity implements Adap
         listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
 
         TextView workoutName = (TextView) findViewById(R.id.workout_name);
         workoutName.setText(this.workout.getName());
@@ -137,19 +139,13 @@ public class WorkoutDetailViewActivity extends AppCompatActivity implements Adap
                 intent.putExtra(GlobalConstants.WORKOUT_ID, this.workout.getId());
                 startActivity(intent);
                 return true;
-
-            case R.id.delete_exericses:
-                this.deleteExercisesFromWorkout();
-                return true;
-
             default:
                 return true;
         }
     }
 
-    private void deleteExercisesFromWorkout() {
 
-    }
+
 
 
     public void addExercises(View view) {
@@ -164,5 +160,15 @@ public class WorkoutDetailViewActivity extends AppCompatActivity implements Adap
         Intent intent = new Intent(this, ExerciseDetailActivity.class);
         intent.putExtra(GlobalConstants.EX_ID, this.workout.getExercises().get(position).getId());
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        Exercise exercise = workout.getExercises().get(position);
+        workout.removeExercise(exercise);
+        DBRegistryFacade.getInstance(this).removeExerciseFromWorkout(workout, exercise);
+        this.arrayAdapter.notifyDataSetChanged();
+
+        return true;
     }
 }
