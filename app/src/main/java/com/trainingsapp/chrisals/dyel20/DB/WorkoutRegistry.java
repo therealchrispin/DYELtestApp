@@ -96,12 +96,6 @@ public class WorkoutRegistry extends DataBaseAccessHandler {
         return workouts;
     }
 
-    // TODO remove Exercise from Workout
-    private void removeExerciseFromWorkout(Exercise exercise){
-        /////////
-    }
-
-
     private ArrayList<WeekDay> stringToWeekdayArrayList(String weekString) {
         String[] stringweek = weekString.split(",");
 
